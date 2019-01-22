@@ -10,8 +10,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj",
 		{9F0742E0-2D08-40FA-ADB1-3D7619BCA034} = {9F0742E0-2D08-40FA-ADB1-3D7619BCA034}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Clang Console Application1", "Clang Console Application1\Clang Console Application1.vcxproj", "{27FCD18A-B492-46A4-934B-8CCB73F3A459}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -26,10 +24,6 @@ Global
 		{6CE20EFB-B098-43B5-B47F-6CBC3BBA4890}.Debug|x64.Build.0 = Debug|x64
 		{6CE20EFB-B098-43B5-B47F-6CBC3BBA4890}.Release|x64.ActiveCfg = Release|x64
 		{6CE20EFB-B098-43B5-B47F-6CBC3BBA4890}.Release|x64.Build.0 = Release|x64
-		{27FCD18A-B492-46A4-934B-8CCB73F3A459}.Debug|x64.ActiveCfg = Debug|x64
-		{27FCD18A-B492-46A4-934B-8CCB73F3A459}.Debug|x64.Build.0 = Debug|x64
-		{27FCD18A-B492-46A4-934B-8CCB73F3A459}.Release|x64.ActiveCfg = Release|x64
-		{27FCD18A-B492-46A4-934B-8CCB73F3A459}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
