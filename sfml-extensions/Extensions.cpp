@@ -22,7 +22,6 @@
 // SOFTWARE.
 
 #include <chrono>
-#include <ciso646>
 #include <cmath>
 
 #include <iomanip>
@@ -500,6 +499,43 @@ std::string loadFromResource ( const Int32 name_ ) {
     }
 
     return std::string ( ( char* ) first_byte, rsrc_data_size );
+}
+
+
+void loadFromResource ( sf::Music & destination_, const Int32 name_ ) {
+
+    HRSRC rsrc_data = FindResource ( NULL, MAKEINTRESOURCE ( name_ ), L"FILEDATA" );
+
+    if ( !( rsrc_data ) ) {
+
+        throw std::runtime_error ( "Failed to find resource." );
+    }
+
+    DWORD rsrc_data_size = SizeofResource ( NULL, rsrc_data );
+
+    if ( rsrc_data_size <= 0 ) {
+
+        throw std::runtime_error ( "Size of resource is 0." );
+    }
+
+    HGLOBAL grsrc_data = LoadResource ( NULL, rsrc_data );
+
+    if ( !( grsrc_data ) ) {
+
+        throw std::runtime_error ( "Failed to load resource." );
+    }
+
+    LPVOID first_byte = LockResource ( grsrc_data );
+
+    if ( !( first_byte ) ) {
+
+        throw std::runtime_error ( "Failed to lock resource." );
+    }
+
+    if ( !( destination_.openFromMemory ( first_byte, rsrc_data_size ) ) ) {
+
+        throw std::runtime_error ( "Failed to load resource from memory." );
+    }
 }
 
 

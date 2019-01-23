@@ -50,6 +50,8 @@
 #include <boost/uuid/uuid.hpp>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 
 #ifndef SFML_EXTENSIONS_BUILD
 #pragma comment ( lib, "Dwmapi.lib" )
@@ -295,6 +297,8 @@ void loadFromResource ( T &destination_, const Int32 name_ ) {
     }
 }
 
+
+void loadFromResource ( sf::Music & destination_, const Int32 name_ );
 std::string loadFromResource ( const Int32 name );
 void loadFromResource ( Shader &shader_, const Shader::Type type_, const Int32 name_ );
 void loadFromResource ( Shader &shader_, const Int32 vertex_name_, const Int32 fragment_name_ );
