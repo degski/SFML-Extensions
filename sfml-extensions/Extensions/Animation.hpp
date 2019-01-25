@@ -33,7 +33,7 @@
 
 #include "Extensions.hpp"
 
-#define DELEGATE_IMP
+// #define DELEGATE_IMP
 
 #ifdef DELEGATE_IMP
 #include "Delegate.hpp"
@@ -686,8 +686,8 @@ struct DelegateTimer {
 };
 }
 
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) } }
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
+#define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) } }
+#define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
 #endif
 
