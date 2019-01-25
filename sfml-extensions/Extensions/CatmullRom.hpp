@@ -34,8 +34,8 @@
 
 namespace sf::CatmullRom {
 
-	using Points = boost::container::deque<Point>;
-	using CoordinatesVector = std::vector<Point>;
+    using Points = boost::container::deque<Point>;
+    using CoordinatesVector = std::vector<Point>;
 
     template<typename Container>
     float length ( const Container &v_ ) noexcept {
@@ -53,16 +53,16 @@ namespace sf::CatmullRom {
         return return_value;
     }
 
-	// CoordinatesVector catmullRom0 ( const Points &points_, const int number_of_points_per_interval_ );
+    // CoordinatesVector catmullRom0 ( const Points &points_, const int number_of_points_per_interval_ );
 
     // Calculate Catmull Rom for a chain of points and return the combined curve. The
     // chains' first and last point are extrapolated from the second and 1-before-
     // last point, respectively...
-	CoordinatesVector catmullRom ( const Points & points_, const Int32 number_of_points_per_interval_ ) noexcept;
+    CoordinatesVector catmullRom ( const Points & points_, const Int32 number_of_points_per_interval_ ) noexcept;
 
     // Calculate Catmull Rom for a chain of points and return the combined curve. The
     // chains' first and last point are extrapolated from the second and 1-before-
     // last point, respectively. The returned points are at a distance of distance_
     // (at least) away from each other... 	Requires 3 points or more...
-	CoordinatesVector catmullRom ( const Points & points_, float distance_ ) noexcept;
+    CoordinatesVector catmullRom ( const Points & points_, float distance_ ) noexcept;
 }

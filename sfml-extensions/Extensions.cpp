@@ -100,18 +100,18 @@ float makeOdd ( const float v_, const bool round_up_ ) noexcept {
 
 void sleepForMilliseconds ( const Int32 milliseconds_ ) noexcept {
 
-    std::this_thread::sleep_for ( sc::milliseconds ( milliseconds_ ) );
+    std::this_thread::sleep_for ( std::chrono::milliseconds ( milliseconds_ ) );
 }
 
 void sleepForMicroseconds ( const Int32 microseconds_ ) noexcept {
 
-    std::this_thread::sleep_for ( sc::microseconds ( microseconds_ ) );
+    std::this_thread::sleep_for ( std::chrono::microseconds ( microseconds_ ) );
 }
 
 
 std::string systemTime ( ) noexcept {
 
-    using smc = sc::system_clock;
+    using smc = std::chrono::system_clock;
 
     const std::time_t now_c = smc::to_time_t ( smc::now ( ) );
 
@@ -581,7 +581,7 @@ void Pacer::reset ( const Int64 frames_per_second_ ) noexcept {
 
     const Int64 cd = ( Int64 ) std::ceil ( 1'000'000'000.0 / ( double ) frames_per_second_ );
 
-    m_duration = sc::nanoseconds ( cd );
+    m_duration = std::chrono::nanoseconds ( cd );
 
     const double d = 1'000'000'000LL / frames_per_second_;
 
@@ -622,22 +622,22 @@ HrTimePoint Pacer::pace ( ) noexcept {
 }
 
 
-bool Pacer::haveElapsed ( sc::milliseconds ms_ ) const noexcept {
+bool Pacer::haveElapsed ( std::chrono::milliseconds ms_ ) const noexcept {
 
-    return ( ( bool ) ( ( m_time - m_start ) > sc::duration_cast<sc::nanoseconds> ( ms_ ) ) );
+    return ( ( bool ) ( ( m_time - m_start ) > std::chrono::duration_cast<std::chrono::nanoseconds> ( ms_ ) ) );
 }
 
 
-bool Pacer::haveNotElapsed ( sc::milliseconds ms_ ) const noexcept {
+bool Pacer::haveNotElapsed ( std::chrono::milliseconds ms_ ) const noexcept {
 
-    return ( ( bool ) ( ( m_time - m_start ) < sc::duration_cast<sc::nanoseconds> ( ms_ ) ) );
+    return ( ( bool ) ( ( m_time - m_start ) < std::chrono::duration_cast<std::chrono::nanoseconds> ( ms_ ) ) );
 }
 
 
 IntDuration Pacer::now ( ) noexcept {
 
-    // static const sc::nanoseconds start { __rdtscp ( &m_ui ) };
+    // static const std::chrono::nanoseconds start { __rdtscp ( &m_ui ) };
 
-    return sc::nanoseconds { __rdtscp ( &m_ui ) };
+    return std::chrono::nanoseconds { __rdtscp ( &m_ui ) };
 }
 }

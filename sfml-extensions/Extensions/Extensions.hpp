@@ -38,6 +38,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <functional>
 #include <iomanip>
 #include <numeric>
 #include <optional>
@@ -64,13 +65,16 @@
 #endif
 
 
+
+using namespace std::placeholders;  // for _1, _2, _3...
+
+
+
 namespace sf {
 
-namespace sc = std::chrono;
-
-using HrClock = sc::high_resolution_clock;
-using FloatDuration = sc::duration<float>;
-using IntDuration = sc::duration<Int64, std::nano>;
+using HrClock = std::chrono::high_resolution_clock;
+using FloatDuration = std::chrono::duration<float>;
+using IntDuration = std::chrono::duration<Int64, std::nano>;
 using HrTimePoint = HrClock::time_point;
 
 enum class ScreenSizeType : Int32 { Small = 576, Medium = 614, Large = 864 };
@@ -434,8 +438,8 @@ struct Pacer {
 
     HrTimePoint pace ( ) noexcept;
 
-    bool haveElapsed ( sc::milliseconds ms_ ) const noexcept;
-    bool haveNotElapsed ( sc::milliseconds ms_ ) const noexcept;
+    bool haveElapsed ( std::chrono::milliseconds ms_ ) const noexcept;
+    bool haveNotElapsed ( std::chrono::milliseconds ms_ ) const noexcept;
 
     IntDuration now ( ) noexcept;
 

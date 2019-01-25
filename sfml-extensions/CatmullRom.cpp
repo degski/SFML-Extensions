@@ -374,111 +374,111 @@ CoordinatesVector catmullRom ( const Points & points_, float distance_ ) noexcep
 
 sf::Vector2f PointOnCurve ( const float t, const sf::Vector2f &p0, const sf::Vector2f &p1, const sf::Vector2f &p2, const sf::Vector2f &p3 ) {
 
-	const float t2 = t * t, t3 = t2 * t;
+    const float t2 = t * t, t3 = t2 * t;
 
-	return sf::Vector2f { 0.5f * ( ( 2.0f * p1.x ) + ( -p0.x + p2.x ) * t + ( 2.0f * p0.x - 5.0f * p1.x + 4 * p2.x - p3.x ) * t2 + ( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ) * t3 ), 0.5f * ( ( 2.0f * p1.y ) + ( -p0.y + p2.y ) * t + ( 2.0f * p0.y - 5.0f * p1.y + 4 * p2.y - p3.y ) * t2 + ( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) * t3 ) };
+    return sf::Vector2f { 0.5f * ( ( 2.0f * p1.x ) + ( -p0.x + p2.x ) * t + ( 2.0f * p0.x - 5.0f * p1.x + 4 * p2.x - p3.x ) * t2 + ( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ) * t3 ), 0.5f * ( ( 2.0f * p1.y ) + ( -p0.y + p2.y ) * t + ( 2.0f * p0.y - 5.0f * p1.y + 4 * p2.y - p3.y ) * t2 + ( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) * t3 ) };
 }
 
 /*
 
 out.x = 0.5f * ( ( 2.0f * p1.x ) +
-	( -p0.x + p2.x ) * t1 +
-	( 2.0f * p0.x - 5.0f * p1.x + 4 * p2.x - p3.x ) * t2 +
-	( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ) * t3 );
+    ( -p0.x + p2.x ) * t1 +
+    ( 2.0f * p0.x - 5.0f * p1.x + 4 * p2.x - p3.x ) * t2 +
+    ( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ) * t3 );
 out.y = 0.5f * ( ( 2.0f * p1.y ) +
-	( -p0.y + p2.y ) * t1 +
-	( 2.0f * p0.y - 5.0f * p1.y + 4 * p2.y - p3.y ) * t2 +
-	( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) * t3 );
+    ( -p0.y + p2.y ) * t1 +
+    ( 2.0f * p0.y - 5.0f * p1.y + 4 * p2.y - p3.y ) * t2 +
+    ( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) * t3 );
 
-	*/
+    */
 
 
 struct PoC {
 
-	float cx0, cx1, cx2, cx3, cy0, cy1, cy2, cy3;
+    float cx0, cx1, cx2, cx3, cy0, cy1, cy2, cy3;
 
-	PoC ( ) { }
-	PoC ( const sf::Vector2f &p0, const sf::Vector2f &p1, const sf::Vector2f &p2, const sf::Vector2f &p3 ) :
+    PoC ( ) { }
+    PoC ( const sf::Vector2f &p0, const sf::Vector2f &p1, const sf::Vector2f &p2, const sf::Vector2f &p3 ) :
 
-		cx0 ( 2.0f * p1.x ),
-		cx1 ( -p0.x + p2.x ),
-		cx2 ( 2.0f * p0.x - 5.0f * p1.x + 4.0f * p2.x - p3.x ),
-		cx3 ( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ),
-		cy0 ( 2.0f * p1.y ),
-		cy1 ( -p0.y + p2.y ),
-		cy2 ( 2.0f * p0.y - 5.0f * p1.y + 4.0f * p2.y - p3.y ),
-		cy3 ( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) {
-	}
+        cx0 ( 2.0f * p1.x ),
+        cx1 ( -p0.x + p2.x ),
+        cx2 ( 2.0f * p0.x - 5.0f * p1.x + 4.0f * p2.x - p3.x ),
+        cx3 ( -p0.x + 3.0f * p1.x - 3.0f * p2.x + p3.x ),
+        cy0 ( 2.0f * p1.y ),
+        cy1 ( -p0.y + p2.y ),
+        cy2 ( 2.0f * p0.y - 5.0f * p1.y + 4.0f * p2.y - p3.y ),
+        cy3 ( -p0.y + 3.0f * p1.y - 3.0f * p2.y + p3.y ) {
+    }
 
-	sf::Vector2f evaluate ( const float t1 ) const {
+    sf::Vector2f evaluate ( const float t1 ) const {
 
-		return sf::Vector2f { 0.5f * ( cx0 + ( cx1 + ( cx2 + cx3 * t1 ) * t1 ) * t1 ), 0.5f * ( cy0 + ( cy1 + ( cy2 + cy3 * t1 ) * t1 ) * t1 ) };
-	}
+        return sf::Vector2f { 0.5f * ( cx0 + ( cx1 + ( cx2 + cx3 * t1 ) * t1 ) * t1 ), 0.5f * ( cy0 + ( cy1 + ( cy2 + cy3 * t1 ) * t1 ) * t1 ) };
+    }
 };
 
 
 
 CoordinatesVector catmullRom0 ( const Points &points_, const int number_of_points_per_interval_ ) {
 
-	// Calculate Catmull Rom for a chain of points and return the combined curve. The
-	// chains' first and last point are extrapolated from the second and 1-before-
-	// last point, respectively...
+    // Calculate Catmull Rom for a chain of points and return the combined curve. The
+    // chains' first and last point are extrapolated from the second and 1-before-
+    // last point, respectively...
 
-	const int number_of_intervals = static_cast<int> ( points_.size ( ) ) - 1L; // -1 = -3 + 2 extrap.
-	const float rec = 1.0f / number_of_points_per_interval_;
+    const int number_of_intervals = static_cast<int> ( points_.size ( ) ) - 1L; // -1 = -3 + 2 extrap.
+    const float rec = 1.0f / number_of_points_per_interval_;
 
-	PoC poly;
+    PoC poly;
 
-	CoordinatesVector r;
+    CoordinatesVector r;
 
-	r.reserve ( number_of_intervals * number_of_points_per_interval_ );
+    r.reserve ( number_of_intervals * number_of_points_per_interval_ );
 
-	if ( number_of_intervals == 1 ) { // 2 points...
+    if ( number_of_intervals == 1 ) { // 2 points...
 
-		// Extrapolate both ends...
+        // Extrapolate both ends...
 
-		poly = PoC ( 2.0f * points_ [ 0 ] - points_ [ 1 ], points_ [ 0 ], points_ [ 1 ], 2.0f * points_ [ 1 ] - points_ [ 0 ] );
+        poly = PoC ( 2.0f * points_ [ 0 ] - points_ [ 1 ], points_ [ 0 ], points_ [ 1 ], 2.0f * points_ [ 1 ] - points_ [ 0 ] );
 
-		for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
+        for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
 
-			r.emplace_back ( poly.evaluate ( rec * i ) );
-		}
-	}
+            r.emplace_back ( poly.evaluate ( rec * i ) );
+        }
+    }
 
-	else { // 3 points or more...
+    else { // 3 points or more...
 
-		   // Extrapolate...
+           // Extrapolate...
 
-		poly = PoC ( 2.0f * points_ [ 0 ] - points_ [ 1 ], points_ [ 0 ], points_ [ 1 ], points_ [ 2 ] );
+        poly = PoC ( 2.0f * points_ [ 0 ] - points_ [ 1 ], points_ [ 0 ], points_ [ 1 ], points_ [ 2 ] );
 
-		for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
+        for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
 
-			r.emplace_back ( poly.evaluate ( rec * i ) );
-		}
+            r.emplace_back ( poly.evaluate ( rec * i ) );
+        }
 
-		// Calculate (only runs when 4 points or more)...
+        // Calculate (only runs when 4 points or more)...
 
-		for ( int j = 0; j < points_.size ( ) - 3; j++ ) {
+        for ( int j = 0; j < points_.size ( ) - 3; j++ ) {
 
-			poly = PoC ( points_ [ j ], points_ [ j + 1 ], points_ [ j + 2 ], points_ [ j + 3 ] );
+            poly = PoC ( points_ [ j ], points_ [ j + 1 ], points_ [ j + 2 ], points_ [ j + 3 ] );
 
-			for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
+            for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
 
-				r.emplace_back ( poly.evaluate ( rec * i ) );
-			}
-		}
+                r.emplace_back ( poly.evaluate ( rec * i ) );
+            }
+        }
 
-		// Extrapolate...
+        // Extrapolate...
 
-		poly = PoC ( points_ [ number_of_intervals - 2 ], points_ [ number_of_intervals - 1 ], points_ [ number_of_intervals ], 2.0f * points_ [ number_of_intervals ] - points_ [ number_of_intervals - 1 ] );
+        poly = PoC ( points_ [ number_of_intervals - 2 ], points_ [ number_of_intervals - 1 ], points_ [ number_of_intervals ], 2.0f * points_ [ number_of_intervals ] - points_ [ number_of_intervals - 1 ] );
 
-		for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
+        for ( int i = 0; i < number_of_points_per_interval_; i++ ) {
 
-			r.emplace_back ( poly.evaluate ( rec * i ) );
-		}
-	}
+            r.emplace_back ( poly.evaluate ( rec * i ) );
+        }
+    }
 
-	return r;
+    return r;
 }
 
 #endif

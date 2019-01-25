@@ -634,9 +634,6 @@ struct easing {
 };
 
 
-using namespace std::placeholders;  // for _1, _2, _3...
-
-
 struct CallbackTimer {
 
     enum class Status : Int32 { waiting, animating, finished };
@@ -649,7 +646,7 @@ struct CallbackTimer {
     float m_duration, m_start, m_end;
     HrTimePoint m_start_time;
 
-    CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const sc::milliseconds delay_ = sc::milliseconds { 0 } ) noexcept;
+    CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ = std::chrono::milliseconds { 0 } ) noexcept;
 
     Status run ( ) noexcept;
 
@@ -659,8 +656,8 @@ struct CallbackTimer {
 };
 }
 
-#define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, sc::milliseconds { ( D ) }
-#define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, sc::milliseconds { ( D ) }, sc::milliseconds { ( E ) }
+#define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
+#define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
 
 #ifdef DELEGATE_IMP
@@ -679,7 +676,7 @@ struct DelegateTimer {
     float m_duration, m_start, m_end;
     HrTimePoint m_start_time;
 
-    DelegateTimer ( Delegate && delegate_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const sc::milliseconds delay_ = sc::milliseconds { 0 } ) noexcept;
+    DelegateTimer ( Delegate && delegate_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ = std::chrono::milliseconds { 0 } ) noexcept;
 
     Status run ( ) noexcept;
 
@@ -689,8 +686,8 @@ struct DelegateTimer {
 };
 }
 
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, sc::milliseconds { ( D ) } }
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, sc::milliseconds { ( D ) }, sc::milliseconds { ( E ) }
+#define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) } }
+#define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
 #endif
 
