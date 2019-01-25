@@ -24,6 +24,46 @@
 #include "./Extensions/Animation.hpp"
 
 
+/*
+
+example use
+
+
+struct Tester {
+
+    void ani1 ( const float value_ ) noexcept {
+        std::cout << "ani 1 " << value_ << nl;
+    }
+
+    void ani2 ( const float value_ ) noexcept {
+        std::cout << "ani 2 " << value_ << nl;
+    }
+};
+
+
+
+int main ( ) {
+
+    Tester tester;
+
+    sf::DelegateAnimator animator;
+
+    animator.emplace ( INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY ( tester, ani1, sf::easing::quadraticInEasing, 0.0f, 90.0f, 5000, 1000 ) );
+
+    while ( true ) {
+
+        animator.run ( );
+        sf::sleepForMilliseconds ( 16 );
+    }
+
+
+    return EXIT_SUCCESS;
+}
+
+
+*/
+
+
 namespace sf {
 
 CallbackTimer::CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ ) noexcept :
