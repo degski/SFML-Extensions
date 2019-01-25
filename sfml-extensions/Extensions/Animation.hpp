@@ -707,42 +707,31 @@ private:
 public:
 
     inline void reserve ( const uint32_t r_ ) noexcept {
-
         m_timers.reserve ( r_ );
     }
 
     template < typename ... Args >
     inline void emplace ( Args ... args_ ) noexcept {
-
         m_timers.emplace ( std::forward < Args > ( args_ ) ... );
     }
 
     void run ( ) noexcept {
-
-        const typename Timers::const_iterator end = std::end ( m_timers );
         typename Timers::iterator it = std::begin ( m_timers );
-
-        while ( end != it ) {
-
+        while ( std::end ( m_timers ) != it ) {
             if ( Timer::Status::finished == it->run ( ) ) {
-
                 it = m_timers.erase ( it );
             }
-
             else {
-
                 ++it;
             }
         }
     }
 
     inline uint32_t size ( ) const noexcept {
-
         return ( uint32_t ) m_timers.size ( );
     }
 
     inline bool empty ( ) const noexcept {
-
         return m_timers.empty ( );
     }
 };
