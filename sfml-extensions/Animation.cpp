@@ -67,7 +67,6 @@ int main ( ) {
 namespace sf {
 
 CallbackTimer::CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ ) noexcept :
-
     m_callback ( std::move ( callback_ ) ),
     m_easing ( easing_ ),
     m_duration ( duration_.count ( ) ), m_start ( start_ ), m_end ( end_ ),
@@ -76,25 +75,16 @@ CallbackTimer::CallbackTimer ( Callback && callback_, Easing easing_, const floa
 }
 
 typename CallbackTimer::Status CallbackTimer::run ( ) noexcept {
-
     float progress = std::chrono::duration < float > ( s_clock.now ( ) - m_start_time ).count ( );
-
     if ( progress < 0.0f ) {
-
         return Status::waiting;
     }
-
     progress /= m_duration;
-
     if ( progress < 1.0f ) {
-
         m_callback ( m_easing ( progress, m_start, m_end ) );
-
         return Status::animating;
     }
-
     m_callback ( m_end );
-
     return Status::finished;
 }
 
@@ -104,7 +94,6 @@ HrClock CallbackTimer::s_clock;
 #ifdef DELEGATE_IMP
 
 DelegateTimer::DelegateTimer ( Delegate && delegate_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ ) noexcept :
-
     m_delegate ( std::move ( delegate_ ) ),
     m_easing ( easing_ ),
     m_duration ( duration_.count ( ) ), m_start ( start_ ), m_end ( end_ ),
@@ -113,25 +102,16 @@ DelegateTimer::DelegateTimer ( Delegate && delegate_, Easing easing_, const floa
 }
 
 DelegateTimer::Status DelegateTimer::run ( ) noexcept {
-
     float progress = std::chrono::duration < float > ( s_clock.now ( ) - m_start_time ).count ( );
-
     if ( progress < 0.0f ) {
-
         return Status::waiting;
     }
-
     progress /= m_duration;
-
     if ( progress < 1.0f ) {
-
         m_delegate ( m_easing ( progress, m_start, m_end ) );
-
         return Status::animating;
     }
-
     m_delegate ( m_end );
-
     return Status::finished;
 }
 

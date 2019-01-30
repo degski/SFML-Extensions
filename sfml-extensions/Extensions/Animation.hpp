@@ -710,7 +710,11 @@ public:
         m_timers.reserve ( r_ );
     }
 
-    template < typename ... Args >
+    inline void clear ( ) noexcept {
+        m_timers.clear ( );
+    }
+
+    template< typename ... Args >
     inline void emplace ( Args ... args_ ) noexcept {
         m_timers.emplace ( std::forward < Args > ( args_ ) ... );
     }

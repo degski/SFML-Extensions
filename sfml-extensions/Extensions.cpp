@@ -616,7 +616,7 @@ HrTimePoint Pacer::pace ( ) noexcept {
 
     std::this_thread::sleep_until ( m_time );// -duration { 666'666LL } );
 
-    std::cout << "co " << qpcounter ( ) << '\n';
+    // std::cout << "co " << qpcounter ( ) << '\n';
 
     return HrClock::now ( );
 }
