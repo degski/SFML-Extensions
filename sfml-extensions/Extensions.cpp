@@ -589,7 +589,7 @@ void Pacer::reset ( const Int64 frames_per_second_ ) noexcept {
 
     for ( ; detail::equal ( c_start * cd - 1LL, c_start * d ); ++c_start );
 
-    std::cout << ( c_start * cd - 1LL ) << " " << ( c_start * d ) << '\n';
+    // std::cout << ( c_start * cd - 1LL ) << " " << ( c_start * d ) << '\n';
 
     m_start = m_time = HrClock::now ( );
 }
