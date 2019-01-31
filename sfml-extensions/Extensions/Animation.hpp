@@ -656,8 +656,12 @@ struct CallbackTimer {
 };
 }
 
-#define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
-#define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &decltype(I)::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
+
+#define CALLBACK_EASING_START_END_DURATION( F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
+#define CALLBACK_EASING_START_END_DURATION_DELAY( F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
+
+#define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
+#define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
 
 #ifdef DELEGATE_IMP
@@ -685,7 +689,7 @@ struct DelegateTimer {
     static HrClock s_clock;
 };
 }
-
+// TODO will need some std::decay added.
 #define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) } }
 #define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
