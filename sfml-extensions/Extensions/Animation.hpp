@@ -657,6 +657,9 @@ struct CallbackTimer {
 }
 
 
+#define LAMBDA_EASING_START_END_DURATION( L, AE, P1, P2, D ) L, &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
+#define LAMBDA_EASING_START_END_DURATION_DELAY( L, AE, P1, P2, D, E ) L, &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
+
 #define CALLBACK_EASING_START_END_DURATION( F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
 #define CALLBACK_EASING_START_END_DURATION_DELAY( F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
