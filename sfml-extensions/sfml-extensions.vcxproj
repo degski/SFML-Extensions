@@ -77,11 +77,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(VC_X64_LIB)\</OutDir>
+    <OutDir>Y:\vcpkg\installed\x64-windows-static\debug\lib\</OutDir>
     <TargetName>$(ProjectName)-s-d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(VC_X64_LIB)\</OutDir>
+    <OutDir>Y:\vcpkg\installed\x64-windows-static\lib\</OutDir>
     <TargetName>$(ProjectName)-s</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -100,9 +100,9 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy Extensions.hpp $(VC_X64_INCLUDE)\sfml\ /S /Y /D
-if not exist $(VC_X64_INCLUDE)\sfml\Extensions\ (md $(VC_X64_INCLUDE)\sfml\Extensions\)
-xcopy Extensions\*.* $(VC_X64_INCLUDE)\sfml\Extensions\ /S /Y /D</Command>
+      <Command>xcopy Extensions.hpp Y:\vcpkg\installed\x64-windows-static\include\sfml\ /S /Y /D
+if not exist Y:\vcpkg\installed\x64-windows-static\include\sfml\Extensions\ (md Y:\vcpkg\installed\x64-windows-static\include\SFML\Extensions\)
+xcopy Extensions\*.* Y:\vcpkg\installed\x64-windows-static\include\sfml\Extensions\ /S /Y /D</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,9 +127,9 @@ xcopy Extensions\*.* $(VC_X64_INCLUDE)\sfml\Extensions\ /S /Y /D</Command>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy Extensions.hpp $(VC_X64_INCLUDE)\sfml\ /S /Y /D
-if not exist $(VC_X64_INCLUDE)\sfml\Extensions\ (md $(VC_X64_INCLUDE)\sfml\Extensions\)
-xcopy Extensions\*.* $(VC_X64_INCLUDE)\sfml\Extensions\ /S /Y /D</Command>
+      <Command>xcopy Extensions.hpp Y:\vcpkg\installed\x64-windows-static\include\sfml\ /S /Y /D
+if not exist Y:\vcpkg\installed\x64-windows-static\include\sfml\Extensions\ (md Y:\vcpkg\installed\x64-windows-static\include\SFML\Extensions\)
+xcopy Extensions\*.* Y:\vcpkg\installed\x64-windows-static\include\sfml\Extensions\ /S /Y /D</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

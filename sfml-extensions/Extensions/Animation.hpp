@@ -50,7 +50,7 @@ struct easing {
         template < typename T >
         static T run ( float position, const T start, const T end ) noexcept {
 
-            return static_cast < T > { 1 };
+            return static_cast < T > ( 1 );
         }
 
     } no = noEasing { };
