@@ -43,6 +43,18 @@ namespace sf {
 
 struct easing {
 
+    // Value is 1.0...
+
+    static constexpr struct noEasing {
+
+        template < typename T >
+        static T run ( float position, const T start, const T end ) noexcept {
+
+            return static_cast < T > { 1 };
+        }
+
+    } no = noEasing { };
+
     // Values change with constant speed...
 
     static constexpr struct linearEasing {
@@ -657,12 +669,15 @@ struct CallbackTimer {
 }
 
 
+#define LAMBDA_DELAY( L, E ) L, &sf::easing::noEasing::run<float>, 0.0f, 0.0f, std::chrono::milliseconds { ( 0 ) }, std::chrono::milliseconds { ( E ) }
 #define LAMBDA_EASING_START_END_DURATION( L, AE, P1, P2, D ) L, &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
 #define LAMBDA_EASING_START_END_DURATION_DELAY( L, AE, P1, P2, D, E ) L, &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
+#define CALLBACK_DELAY( F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &sf::easing::noEasing::run<float>, 0.0f, 0.0f, std::chrono::milliseconds { ( 0 ) }, std::chrono::milliseconds { ( E ) }
 #define CALLBACK_EASING_START_END_DURATION( F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
 #define CALLBACK_EASING_START_END_DURATION_DELAY( F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(*this)>::type::F, this, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
+#define INSTANCE_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &sf::easing::noEasing::run<float>, 0.0f, 0.0f, std::chrono::milliseconds { ( 0 ) }, std::chrono::milliseconds { ( E ) }
 #define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
 #define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 

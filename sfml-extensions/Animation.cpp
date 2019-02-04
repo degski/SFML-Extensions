@@ -67,7 +67,7 @@ int main ( ) {
 namespace sf {
 
 CallbackTimer::CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ ) noexcept :
-    m_callback ( std::move ( callback_ ) ),
+    m_callback ( callback_ ),
     m_easing ( easing_ ),
     m_duration ( duration_.count ( ) ), m_start ( start_ ), m_end ( end_ ),
     m_start_time ( s_clock.now ( ) + delay_ ) {
