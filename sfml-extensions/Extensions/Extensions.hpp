@@ -344,8 +344,6 @@ void negateAbs ( T &x_ ) noexcept {
 }
 
 
-IntRect getResourceRect ( const float square_size_, const std::array<Int32, 4> & size_ );
-
 template<typename T>
 inline float min ( const T a, const T b, const T c ) noexcept { return std::min ( std::min ( a, b ), c ); }
 template<typename T>

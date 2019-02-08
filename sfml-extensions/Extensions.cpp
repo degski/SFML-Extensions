@@ -397,19 +397,6 @@ void loadFromResource ( Shader & shader_, const Int32 vertex_name_, const Int32 
 }
 
 
-IntRect getResourceRect ( const float square_size_, const std::array<Int32, 4> & size_ ) {
-    const std::size_t index = ( static_cast< std::size_t > ( square_size_ ) - 41 ) / 20;
-    IntRect return_value;
-    switch ( index ) {
-        case 0: return_value = IntRect ( 0, 0, size_ [ index ], size_ [ index ] ); break;
-        case 1: return_value = IntRect ( size_ [ 0 ], 0, size_ [ index ], size_ [ index ] ); break;
-        case 2: return_value = IntRect ( size_ [ 0 ] + size_ [ 1 ], 0, size_ [ index ], size_ [ index ] ); break;
-        case 3: return_value = IntRect ( size_ [ 0 ] + size_ [ 1 ] + size_ [ 2 ], 0, size_ [ index ], size_ [ index ] ); break;
-        default:; // Shouldn't happen.
-    }
-    return return_value;
-}
-
 
 void Pacer::reset ( const Int64 frames_per_second_ ) noexcept {
     const Int64 cd = ( Int64 ) std::ceil ( 1'000'000'000.0 / ( double ) frames_per_second_ );
