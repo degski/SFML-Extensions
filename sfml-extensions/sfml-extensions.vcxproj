@@ -29,7 +29,6 @@
     <ClInclude Include="Extensions\CatmullRom.hpp" />
     <ClInclude Include="Extensions\Delegate.hpp" />
     <ClInclude Include="Extensions\Extensions.hpp" />
-    <ClInclude Include="Extensions\Fsm.hpp" />
     <ClInclude Include="Extensions\Nanotimer.hpp" />
     <ClInclude Include="Extensions\Owningptr.hpp" />
     <ClInclude Include="Extensions\ParticleSystem.hpp" />
