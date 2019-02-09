@@ -77,9 +77,15 @@
     <ClInclude Include="Extensions\Random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Extensions\Vector4.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\Box.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Extensions\Vector4.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

@@ -34,11 +34,13 @@
     <ClInclude Include="Extensions\ParticleSystem.hpp" />
     <ClInclude Include="Extensions\Random.hpp" />
     <ClInclude Include="Extensions\Serialize.hpp" />
+    <ClInclude Include="Extensions\Vector4.hpp" />
     <ClInclude Include="Extensions\Z85.hpp" />
     <ClInclude Include="z85.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\Box.inl" />
+    <None Include="Extensions\Vector4.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

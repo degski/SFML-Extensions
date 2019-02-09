@@ -53,6 +53,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#include "Vector4.hpp"
 
 #ifndef SFML_EXTENSIONS_BUILD
 #pragma comment ( lib, "Dwmapi.lib" )
