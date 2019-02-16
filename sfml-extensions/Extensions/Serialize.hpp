@@ -34,7 +34,7 @@
 #include <lz4stream.hpp>
 
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 
 namespace sf {
@@ -54,14 +54,12 @@ Path getAppExePath ( ) noexcept;
 
 template<typename T>
 void saveToFile ( const T & t_, Path && path_, std::string && file_name_ ) noexcept {
-
     std::ofstream compressed_ostream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
     LZ4OutputStream lz4_ostream ( compressed_ostream );
-
-    cereal::BinaryOutputArchive archive ( lz4_ostream );
-
-    archive ( t_ );
-
+    {
+        cereal::BinaryOutputArchive archive ( lz4_ostream );
+        archive ( t_ );
+    }
     lz4_ostream.flush ( );
     compressed_ostream.flush ( );
 
@@ -71,14 +69,12 @@ void saveToFile ( const T & t_, Path && path_, std::string && file_name_ ) noexc
 
 template<typename T>
 void loadFromFile ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
-
     std::ifstream compressed_istream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
     LZ4InputStream lz4_istream ( compressed_istream );
-
-    cereal::BinaryInputArchive archive ( lz4_istream );
-
-    archive ( t_ );
-
+    {
+        cereal::BinaryInputArchive archive ( lz4_istream );
+        archive ( t_ );
+    }
     compressed_istream.close ( );
 }
 
