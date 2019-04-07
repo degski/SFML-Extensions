@@ -33,7 +33,7 @@
 
 #include "Extensions.hpp"
 
-#define DELEGATE_IMP
+// #define DELEGATE_IMP
 
 #ifdef DELEGATE_IMP
 #include "Delegate.hpp"
