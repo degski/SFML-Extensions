@@ -186,6 +186,12 @@ Vector2f centreOrigin ( RectangleShape & shape_ ) noexcept {
 }
 
 
+Vector2f centreOrigin ( Sprite & sprite_ ) noexcept {
+    sprite_.setOrigin ( sprite_.getLocalBounds ( ).width * 0.5f, sprite_.getLocalBounds ( ).height * 0.5f );
+    return sprite_.getOrigin ( );
+}
+
+
 Vector2f centreOrigin ( Text & text_ ) noexcept {
     text_.setOrigin ( text_.getLocalBounds ( ).width * 0.5f, text_.getLocalBounds ( ).height * 0.5f );
     return text_.getOrigin ( );

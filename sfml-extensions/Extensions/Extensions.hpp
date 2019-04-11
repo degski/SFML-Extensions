@@ -240,6 +240,7 @@ struct SquareShape : RectangleShape {
 };
 
 Vector2f centreOrigin ( RectangleShape & shape_ ) noexcept;
+Vector2f centreOrigin ( Sprite & sprite_ ) noexcept;
 Vector2f centreOrigin ( Text & text_ ) noexcept;
 Vector2f centreRightOrigin ( Text & text_ ) noexcept;
 Vector2f centreLeftOrigin ( Text & text_ ) noexcept;
