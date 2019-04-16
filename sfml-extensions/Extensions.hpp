@@ -25,7 +25,6 @@
 
 #include "./Extensions/Extensions.hpp"
 #include "./Extensions/Box.hpp"
-#include "./Extensions/Delegate.hpp"
 #include "./Extensions/Animation.hpp"
 #include "./Extensions/Nanotimer.hpp"
 #include "./Extensions/Owningptr.hpp"
