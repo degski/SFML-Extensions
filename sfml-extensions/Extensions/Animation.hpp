@@ -33,11 +33,6 @@
 
 #include "Extensions.hpp"
 
-// #define DELEGATE_IMP
-
-#ifdef DELEGATE_IMP
-#include "Delegate.hpp"
-#endif
 
 namespace sf {
 
@@ -681,37 +676,6 @@ struct CallbackTimer {
 #define INSTANCE_CALLBACK_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }
 #define INSTANCE_CALLBACK_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) std::bind ( &std::decay<decltype(I)>::type::F, &I, _1 ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
 
-
-#ifdef DELEGATE_IMP
-
-namespace sf {
-
-struct DelegateTimer {
-
-    enum class Status : Int32 { waiting, animating, finished };
-
-    using Delegate = fd::delegate < void ( float ) >;
-    using Easing = float ( * ) ( float, const float, const float );
-
-    Delegate m_delegate;
-    Easing m_easing;
-    float m_duration, m_start, m_end;
-    HrTimePoint m_start_time;
-
-    DelegateTimer ( Delegate && delegate_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ = std::chrono::milliseconds { 0 } ) noexcept;
-
-    Status run ( ) noexcept;
-
-    private:
-
-    static HrClock s_clock;
-};
-}
-// TODO will need some std::decay added.
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION( I, F, AE, P1, P2, D ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) } }
-#define INSTANCE_DELEGATE_EASING_START_END_DURATION_DELAY( I, F, AE, P1, P2, D, E ) sf::fd::delegate < void ( float )>::from < decltype(I), &decltype(I)::F > ( &I ), &AE::run<float>, P1, P2, std::chrono::milliseconds { ( D ) }, std::chrono::milliseconds { ( E ) }
-
-#endif
 
 namespace sf {
 

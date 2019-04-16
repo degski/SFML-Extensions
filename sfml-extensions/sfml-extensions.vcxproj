@@ -27,7 +27,6 @@
     <ClInclude Include="Extensions\Animation.hpp" />
     <ClInclude Include="Extensions\Box.hpp" />
     <ClInclude Include="Extensions\CatmullRom.hpp" />
-    <ClInclude Include="Extensions\Delegate.hpp" />
     <ClInclude Include="Extensions\Extensions.hpp" />
     <ClInclude Include="Extensions\Nanotimer.hpp" />
     <ClInclude Include="Extensions\Owningptr.hpp" />

@@ -44,9 +44,6 @@
     <ClInclude Include="Extensions\Box.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Extensions\Delegate.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Extensions\Animation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

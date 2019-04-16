@@ -90,33 +90,4 @@ typename CallbackTimer::Status CallbackTimer::run ( ) noexcept {
 
 HrClock CallbackTimer::s_clock;
 
-
-#ifdef DELEGATE_IMP
-
-DelegateTimer::DelegateTimer ( Delegate && delegate_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ ) noexcept :
-    m_delegate ( std::move ( delegate_ ) ),
-    m_easing ( easing_ ),
-    m_duration ( duration_.count ( ) ), m_start ( start_ ), m_end ( end_ ),
-    m_start_time ( s_clock.now ( ) + delay_ ) {
-
-}
-
-DelegateTimer::Status DelegateTimer::run ( ) noexcept {
-    float progress = std::chrono::duration < float > ( s_clock.now ( ) - m_start_time ).count ( );
-    if ( progress < 0.0f ) {
-        return Status::waiting;
-    }
-    progress /= m_duration;
-    if ( progress < 1.0f ) {
-        m_delegate ( m_easing ( progress, m_start, m_end ) );
-        return Status::animating;
-    }
-    m_delegate ( m_end );
-    return Status::finished;
-}
-
-HrClock DelegateTimer::s_clock;
-
-#endif
-
 }
