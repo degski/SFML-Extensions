@@ -34,6 +34,15 @@
 #include <lz4stream.hpp>
 
 
+#ifndef SFML_EXTENSIONS_BUILD
+#ifdef _DEBUG
+#pragma comment ( lib, "lz4stream-s-d.lib" )
+#else
+#pragma comment ( lib, "lz4stream-s.lib" )
+#endif
+#endif
+
+
 namespace fs = std::filesystem;
 
 
