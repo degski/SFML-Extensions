@@ -31,6 +31,8 @@
 
 #include <cereal/cereal.hpp>
 #include <cereal/archives/binary.hpp>
+#include <cereal/archives/xml.hpp>
+
 #include <lz4stream.hpp>
 
 
@@ -64,22 +66,21 @@ Path getAppExePath ( ) noexcept;
 
 
 template<typename T>
-void saveToFile ( const T & t_, Path && path_, std::string && file_name_ ) noexcept {
-    std::ofstream compressed_ostream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
-    LZ4OutputStream lz4_ostream ( compressed_ostream );
+void saveToFileLZ4 ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false, const int compression_level_ = 4 ) noexcept {
+    std::ofstream compressed_ostream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), append_ ? std::ios::binary | std::ios::app | std::ios::out : std::ios::binary | std::ios::out );
+    LZ4OutputStream lz4_ostream ( compressed_ostream, compression_level_ );
     {
         cereal::BinaryOutputArchive archive ( lz4_ostream );
         archive ( t_ );
     }
     lz4_ostream.flush ( );
     compressed_ostream.flush ( );
-
     lz4_ostream.close ( );
     compressed_ostream.close ( );
 }
 
 template<typename T>
-void loadFromFile ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
+void loadFromFileLZ4 ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
     std::ifstream compressed_istream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
     LZ4InputStream lz4_istream ( compressed_istream );
     {
@@ -89,4 +90,47 @@ void loadFromFile ( T & t_, Path && path_, std::string && file_name_ ) noexcept 
     compressed_istream.close ( );
 }
 
+
+template<typename T>
+void saveToFileBin ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false ) noexcept {
+    std::ofstream ostream ( path_ / ( file_name_ + std::string ( ".cereal" ) ), append_ ? std::ios::binary | std::ios::app | std::ios::out : std::ios::binary | std::ios::out );
+    {
+        cereal::BinaryOutputArchive archive ( ostream );
+        archive ( t_ );
+    }
+    ostream.flush ( );
+    ostream.close ( );
+}
+
+template<typename T>
+void loadFromFileBin ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
+    std::ifstream istream ( path_ / ( file_name_ + std::string ( ".cereal" ) ), std::ios::binary );
+    {
+        cereal::BinaryInputArchive archive ( istream );
+        archive ( t_ );
+    }
+    istream.close ( );
+}
+
+
+template<typename T>
+void saveToFileXML ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false ) noexcept {
+    std::ofstream ostream ( path_ / ( file_name_ + std::string ( ".xmlcereal" ) ), append_ ? std::ios::app | std::ios::out : std::ios::out );
+    {
+        cereal::XMLOutputArchive archive ( ostream );
+        archive ( t_ );
+    }
+    ostream.flush ( );
+    ostream.close ( );
+}
+
+template<typename T>
+void loadFromFileXML ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
+    std::ifstream istream ( path_ / ( file_name_ + std::string ( ".xmlcereal" ) ) );
+    {
+        cereal::XMLInputArchive archive ( istream );
+        archive ( t_ );
+    }
+    istream.close ( );
+}
 }
