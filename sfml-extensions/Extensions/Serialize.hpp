@@ -36,8 +36,10 @@
 
 #ifndef SFML_EXTENSIONS_BUILD
 #ifdef _DEBUG
+#pragma comment ( lib, "lz4d.lib" )
 #pragma comment ( lib, "lz4stream-s-d.lib" )
 #else
+#pragma comment ( lib, "lz4.lib" )
 #pragma comment ( lib, "lz4stream-s.lib" )
 #endif
 #endif
