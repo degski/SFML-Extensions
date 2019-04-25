@@ -28,23 +28,12 @@
 #include <string>
 
 #include <SFML/System.hpp>
+#include <SFML/Extensions/LZ4Stream.hpp>
 
 #include <cereal/cereal.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/xml.hpp>
-
-#include <lz4stream.hpp>
-
-
-#ifndef SFML_EXTENSIONS_BUILD
-#ifdef _DEBUG
-#pragma comment ( lib, "lz4d.lib" )
-#pragma comment ( lib, "lz4stream-s-d.lib" )
-#else
-#pragma comment ( lib, "lz4.lib" )
-#pragma comment ( lib, "lz4stream-s.lib" )
-#endif
-#endif
+#include <cereal/archives/csv.hpp>
 
 
 namespace fs = std::filesystem;
@@ -59,30 +48,29 @@ using Path = fs::path;
 // Call only once, afterwards call Path getAppDataPath ( ) noexcept...
 Path setAppDataPath ( std::string && name_ ) noexcept;
 // Call only after calling Path setAppDataPath ( std::string && name_ )
-//  noexcept at least once. Note though that name is immutable after init...
+//  noexcept at least once. Note though that name is immutable after init.
 Path getAppDataPath ( ) noexcept;
-// The location of the apps' executable...
+// The location of the apps' executable.
 Path getAppExePath ( ) noexcept;
 
 
 template<typename T>
 void saveToFileLZ4 ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false, const int compression_level_ = 4 ) noexcept {
     std::ofstream compressed_ostream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), append_ ? std::ios::binary | std::ios::app | std::ios::out : std::ios::binary | std::ios::out );
-    LZ4OutputStream lz4_ostream ( compressed_ostream, compression_level_ );
+    LZ4OStream lz4_ostream ( compressed_ostream, compression_level_ );
     {
         cereal::BinaryOutputArchive archive ( lz4_ostream );
         archive ( t_ );
     }
     lz4_ostream.flush ( );
     compressed_ostream.flush ( );
-    lz4_ostream.close ( );
     compressed_ostream.close ( );
 }
 
 template<typename T>
 void loadFromFileLZ4 ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
     std::ifstream compressed_istream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
-    LZ4InputStream lz4_istream ( compressed_istream );
+    LZ4IStream lz4_istream ( compressed_istream );
     {
         cereal::BinaryInputArchive archive ( lz4_istream );
         archive ( t_ );
@@ -129,6 +117,27 @@ void loadFromFileXML ( T & t_, Path && path_, std::string && file_name_ ) noexce
     std::ifstream istream ( path_ / ( file_name_ + std::string ( ".xmlcereal" ) ) );
     {
         cereal::XMLInputArchive archive ( istream );
+        archive ( t_ );
+    }
+    istream.close ( );
+}
+
+template<typename T>
+void saveToFileCSV ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false ) noexcept {
+    std::ofstream ostream ( path_ / ( file_name_ + std::string ( ".csvcereal" ) ), append_ ? std::ios::app | std::ios::out : std::ios::out );
+    {
+        cereal::CSVOutputArchive archive ( ostream );
+        archive ( t_ );
+    }
+    ostream.flush ( );
+    ostream.close ( );
+}
+
+template<typename T>
+void loadFromFileCSV ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
+    std::ifstream istream ( path_ / ( file_name_ + std::string ( ".csvcereal" ) ) );
+    {
+        cereal::CSVInputArchive archive ( istream );
         archive ( t_ );
     }
     istream.close ( );

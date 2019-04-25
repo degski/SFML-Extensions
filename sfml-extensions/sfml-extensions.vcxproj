@@ -14,6 +14,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="CatmullRom.cpp" />
     <ClCompile Include="Extensions.cpp" />
+    <ClCompile Include="LZ4Stream.cpp" />
     <ClCompile Include="ParticelSystem.cpp" />
     <ClCompile Include="Serialize.cpp" />
     <ClCompile Include="z85.c">
