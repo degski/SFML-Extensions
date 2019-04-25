@@ -99,10 +99,10 @@ class LZ4OStreamBuf final : public std::streambuf {
             throw std::runtime_error ( "Error during LZ4 stream creation" );
         m_preferences.compressionLevel = compression_level_;
         // Setup buffers.
-        std::size_t internal_buffer_size_ = LZ4F_compressBound ( 0, &m_preferences );
-        internal_buffer_size_             = std::max<std::size_t> ( internal_buffer_size_, LZ4F_HEADER_SIZE_MAX ) + 1;
-        m_write_area.resize ( internal_buffer_size_ );
-        m_compression_buffer.resize ( internal_buffer_size_ );
+        std::size_t internal_buffer_size = LZ4F_compressBound ( 0, &m_preferences );
+        internal_buffer_size             = std::max<std::size_t> ( internal_buffer_size, LZ4F_HEADER_SIZE_MAX ) + 1;
+        m_write_area.resize ( internal_buffer_size );
+        m_compression_buffer.resize ( internal_buffer_size );
         // Setup the write are buffer. Last byte is for the overflow operation.
         setp ( &m_write_area.front ( ), &m_write_area.front ( ) + m_write_area.size ( ) - 1 );
         initialize_stream ( );
@@ -114,10 +114,10 @@ class LZ4OStreamBuf final : public std::streambuf {
             throw std::runtime_error ( "Error during LZ4 stream creation" );
         m_preferences.compressionLevel = compression_level_;
         // Setup buffers.
-        std::size_t internal_buffer_size_ = LZ4F_compressBound ( 0, &m_preferences );
-        internal_buffer_size_             = std::max<std::size_t> ( internal_buffer_size_, LZ4F_HEADER_SIZE_MAX ) + 1;
-        m_write_area.resize ( internal_buffer_size_ );
-        m_compression_buffer.resize ( internal_buffer_size_ );
+        std::size_t internal_buffer_size = LZ4F_compressBound ( 0, &m_preferences );
+        internal_buffer_size             = std::max<std::size_t> ( internal_buffer_size, LZ4F_HEADER_SIZE_MAX ) + 1;
+        m_write_area.resize ( internal_buffer_size );
+        m_compression_buffer.resize ( internal_buffer_size );
         // Setup the write are buffer. Last byte is for the overflow operation.
         setp ( &m_write_area.front ( ), &m_write_area.front ( ) + m_write_area.size ( ) - 1 );
         initialize_stream ( );
@@ -186,17 +186,17 @@ class LZ4OStreamBuf final : public std::streambuf {
 
 class LZ4IStreamBuf final : public std::streambuf {
     public:
-    LZ4IStreamBuf ( std::streambuf * source_, std::size_t const internal_buffer_size_ = 4096u ) :
-        m_source ( source_ ), m_context ( nullptr ), m_dictionary ( nullptr ), m_src_buffer ( internal_buffer_size_ ),
-        m_read_area ( internal_buffer_size_ ), m_src_offset ( 0 ), m_src_size ( 0 ) {
+    LZ4IStreamBuf ( std::streambuf * source_, std::size_t const internal_buffer_size = 4096u ) :
+        m_source ( source_ ), m_context ( nullptr ), m_dictionary ( nullptr ), m_src_buffer ( internal_buffer_size ),
+        m_read_area ( internal_buffer_size ), m_src_offset ( 0 ), m_src_size ( 0 ) {
         std::size_t status = LZ4F_createDecompressionContext ( &m_context, LZ4F_VERSION );
         if ( LZ4F_isError ( status ) )
             throw std::runtime_error ( "Error during LZ4 istream creation" );
         setg ( &m_read_area.front ( ), &m_read_area.front ( ), &m_read_area.front ( ) );
     }
-    LZ4IStreamBuf ( std::streambuf * source_, LZ4Dictionary const & dictionary_, std::size_t const internal_buffer_size_ = 4096u ) :
-        m_source ( source_ ), m_context ( nullptr ), m_dictionary ( &dictionary_ ), m_src_buffer ( internal_buffer_size_ ),
-        m_read_area ( internal_buffer_size_ ), m_src_offset ( 0 ), m_src_size ( 0 ) {
+    LZ4IStreamBuf ( std::streambuf * source_, LZ4Dictionary const & dictionary_, std::size_t const internal_buffer_size = 4096u ) :
+        m_source ( source_ ), m_context ( nullptr ), m_dictionary ( &dictionary_ ), m_src_buffer ( internal_buffer_size ),
+        m_read_area ( internal_buffer_size ), m_src_offset ( 0 ), m_src_size ( 0 ) {
         std::size_t status = LZ4F_createDecompressionContext ( &m_context, LZ4F_VERSION );
         if ( LZ4F_isError ( status ) )
             throw std::runtime_error ( "Error during LZ4 istream creation" );
