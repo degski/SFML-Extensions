@@ -74,9 +74,6 @@
     <ClInclude Include="Extensions\ParticleSystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Extensions\Random.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Extensions\Vector4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

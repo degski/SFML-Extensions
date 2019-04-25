@@ -28,59 +28,43 @@
 
 #include <SFML/Graphics.hpp>
 
-
 namespace sf {
 
 using IntInterval = Vector2i;
 
 struct Particle {
-
     Vector2f velocity;
     Time lifetime;
-
     Particle ( ) noexcept;
     void randomize ( ) noexcept;
 };
 
-
 class ParticleSystem : public Drawable, public Transformable, public Vertex, Color {
-
     public:
-
     ParticleSystem ( const Uint32 count_, const IntInterval speed_ = IntInterval { 50, 100 }, const IntInterval lifetime_ = IntInterval { 1'000, 3'000 } );
-
     void update ( const Time elapsed, const Color Color/* = sf::Color::White*/ );
 
     private:
-
     virtual void draw ( RenderTarget & target_, RenderStates states_ ) const {
-
-        // Apply the transform...
-
+        // Apply the transform.
         states_.transform *= getTransform ( );
-
-        // Our particles don't use a texture...
-
+        // Our particles don't use a texture.
         states_.texture = NULL;
-
-        // Draw the vertex array...
-
+        // Draw the vertex array.
         target_.draw ( m_vertices, states_ );
     }
 
     private:
-
     void resetParticle ( const std::size_t index );
 
     public:
-
     IntInterval speed, lifetime;
     Vector2f emitter;
 
     private:
-
     std::vector<Particle> m_particles;
     VertexArray m_vertices;
     Time m_lifetimes;
 };
+
 }

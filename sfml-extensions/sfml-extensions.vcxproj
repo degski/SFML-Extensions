@@ -32,7 +32,6 @@
     <ClInclude Include="Extensions\Nanotimer.hpp" />
     <ClInclude Include="Extensions\Owningptr.hpp" />
     <ClInclude Include="Extensions\ParticleSystem.hpp" />
-    <ClInclude Include="Extensions\Random.hpp" />
     <ClInclude Include="Extensions\Serialize.hpp" />
     <ClInclude Include="Extensions\Vector4.hpp" />
     <ClInclude Include="Extensions\Z85.hpp" />
