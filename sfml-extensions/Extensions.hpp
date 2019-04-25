@@ -23,6 +23,58 @@
 
 #pragma once
 
+#ifndef SFML_EXTENSIONS_BUILD
+    #ifdef _DEBUG
+        #pragma comment ( lib, "sfml-main-d.lib" )
+        #pragma comment ( lib, "sfml-system-s-d.lib" )
+        #pragma comment ( lib, "sfml-window-s-d.lib" )
+        #pragma comment ( lib, "sfml-graphics-s-d.lib" )
+        #pragma comment ( lib, "sfml-audio-s-d.lib" )
+        #pragma comment ( lib, "sfml-network-s-d.lib" )
+        #pragma comment ( lib, "sfml-extensions-s-d.lib" )
+        #pragma comment ( lib, "opengl32.lib" )
+        #pragma comment ( lib, "dwmapi.lib" )
+        #pragma comment ( lib, "winmm.lib" )
+        #pragma comment ( lib, "gdi32.lib" )
+        #pragma comment ( lib, "ws2_32.lib" )
+        #pragma comment ( lib, "freetyped.lib" )
+        #pragma comment ( lib, "turbojpegd.lib" )
+        #pragma comment ( lib, "libpng16d.lib" )
+        #pragma comment ( lib, "openal32.lib" )
+        #pragma comment ( lib, "flac.lib" )
+        #pragma comment ( lib, "vorbisenc.lib" )
+        #pragma comment ( lib, "vorbisfile.lib" )
+        #pragma comment ( lib, "vorbis.lib" )
+        #pragma comment ( lib, "ogg.lib" )
+        #pragma comment ( lib, "bz2d.lib" )
+        #pragma comment ( lib, "zlibd.lib" )
+    #else
+        #pragma comment ( lib, "sfml-main.lib" )
+        #pragma comment ( lib, "sfml-system-s.lib" )
+        #pragma comment ( lib, "sfml-window-s.lib" )
+        #pragma comment ( lib, "sfml-graphics-s.lib" )
+        #pragma comment ( lib, "sfml-audio-s.lib" )
+        #pragma comment ( lib, "sfml-network-s.lib" )
+        #pragma comment ( lib, "sfml-extensions-s.lib" )
+        #pragma comment ( lib, "opengl32.lib" )
+        #pragma comment ( lib, "dwmapi.lib" )
+        #pragma comment ( lib, "winmm.lib" )
+        #pragma comment ( lib, "gdi32.lib" )
+        #pragma comment ( lib, "ws2_32.lib" )
+        #pragma comment ( lib, "freetype.lib" )
+        #pragma comment ( lib, "turbojpeg.lib" )
+        #pragma comment ( lib, "libpng16.lib" )
+        #pragma comment ( lib, "openal32.lib" )
+        #pragma comment ( lib, "flac.lib" )
+        #pragma comment ( lib, "vorbisenc.lib" )
+        #pragma comment ( lib, "vorbisfile.lib" )
+        #pragma comment ( lib, "vorbis.lib" )
+        #pragma comment ( lib, "ogg.lib" )
+        #pragma comment ( lib, "bz2.lib" )
+        #pragma comment ( lib, "zlib.lib" )
+    #endif
+#endif
+
 #include "Extensions/Extensions.hpp"
 #include "Extensions/LZ4Stream.hpp"
 #include "Extensions/Box.hpp"
