@@ -57,12 +57,14 @@ Path getAppExePath ( ) noexcept;
 template<typename T>
 void saveToFileLZ4 ( const T & t_, Path && path_, std::string && file_name_, const bool append_ = false, const int compression_level_ = 4 ) noexcept {
     std::ofstream compressed_ostream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), append_ ? std::ios::binary | std::ios::app | std::ios::out : std::ios::binary | std::ios::out );
-    LZ4OStream lz4_ostream ( compressed_ostream, compression_level_ );
     {
-        cereal::BinaryOutputArchive archive ( lz4_ostream );
-        archive ( t_ );
+        LZ4OStream lz4_ostream ( compressed_ostream, compression_level_ );
+        {
+            cereal::BinaryOutputArchive archive ( lz4_ostream );
+            archive ( t_ );
+        }
+        lz4_ostream.flush ( );
     }
-    lz4_ostream.flush ( );
     compressed_ostream.flush ( );
     compressed_ostream.close ( );
 }
@@ -70,10 +72,12 @@ void saveToFileLZ4 ( const T & t_, Path && path_, std::string && file_name_, con
 template<typename T>
 void loadFromFileLZ4 ( T & t_, Path && path_, std::string && file_name_ ) noexcept {
     std::ifstream compressed_istream ( path_ / ( file_name_ + std::string ( ".lz4cereal" ) ), std::ios::binary );
-    LZ4IStream lz4_istream ( compressed_istream );
     {
-        cereal::BinaryInputArchive archive ( lz4_istream );
-        archive ( t_ );
+        LZ4IStream lz4_istream ( compressed_istream );
+        {
+            cereal::BinaryInputArchive archive ( lz4_istream );
+            archive ( t_ );
+        }
     }
     compressed_istream.close ( );
 }
