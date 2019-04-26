@@ -64,13 +64,13 @@ struct LZ4OStream : public std::ostream {
     static constexpr int BEST_COMPRESSION          = 9;
     LZ4OStream ( std::ostream & stream_, int const compression_level = BALANCED_COMPRESSION );
     LZ4OStream ( std::ostream & stream_, LZ4Dictionary const & dictionary_, int const compression_level_ = BALANCED_COMPRESSION );
-    virtual ~LZ4OStream ( );
+    virtual ~LZ4OStream ( ) override;
 };
 
 struct LZ4IStream : public std::istream {
     LZ4IStream ( std::istream & stream_ );
     LZ4IStream ( std::istream & stream_, LZ4Dictionary const & dictionary_ );
-    virtual ~LZ4IStream ( );
+    virtual ~LZ4IStream ( ) override;
 };
 
 } // namespace sf

@@ -123,7 +123,7 @@ class LZ4OStreamBuf final : public std::streambuf {
         initialize_stream ( );
     }
 
-    virtual ~LZ4OStreamBuf ( ) {
+    virtual ~LZ4OStreamBuf ( ) override {
         finalize_stream ( );
         LZ4F_freeCompressionContext ( m_compression_ctx );
     }
@@ -203,7 +203,7 @@ class LZ4IStreamBuf final : public std::streambuf {
         setg ( &m_read_area.front ( ), &m_read_area.front ( ), &m_read_area.front ( ) );
     }
 
-    virtual ~LZ4IStreamBuf ( ) { LZ4F_freeDecompressionContext ( m_context ); }
+    virtual ~LZ4IStreamBuf ( ) override { LZ4F_freeDecompressionContext ( m_context ); }
 
     protected:
     [[nodiscard]] virtual int_type underflow ( ) override {
