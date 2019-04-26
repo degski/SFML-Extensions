@@ -47,12 +47,13 @@ struct CubicPolyXY {
 
     Vector2f evaluate ( const float t_ ) const noexcept {
 
-        const float t2 = t_ * t_, t3 = t2 * t_;
+        const float t2 = t_ * t_;
+        const float t3 = t2 * t_;
 
         return Vector2f { x.c0 + x.c1 * t_ + x.c2 * t2 + x.c3 * t3, y.c0 + y.c1 * t_ + y.c2 * t2 + y.c3 * t3 };
     }
 };
-}
+}  // namespace sf::CatmullRom
 
 namespace sf::CatmullRom::detail {
 
@@ -115,11 +116,11 @@ void centripetalCatmullRom ( const Vector2f & p0_, const Vector2f & p1_, const V
 }
 
 
-#define F 4.0f
+#define F4 4.0f
 
 inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPolyXY & poly_, const Vector2f last_point_, const float sqrd_distance_ ) noexcept {
 
-    float base = -1.0f / F;
+    float base = -1.0F / F4;
 
     sf::Vector2f point;
 
@@ -127,11 +128,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base += 1.0f / F;
+            base += 1.0f / F4;
 
             if ( base > 1.0f ) { // Overshoot, so skip the search with a negative step and restart with a smaller positive step...
 
-                base -= 1.0f / F;
+                base -= 1.0f / F4;
 
                 goto next1;
             }
@@ -142,11 +143,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base -= 1.0f / F / F;
+            base -= 1.0f / F4 / F4;
 
             if ( base < 0.0f ) { // Overshoot, so skip the search with a positive step and restart with a smaller negative step...
 
-                base += 1.0f / F / F;
+                base += 1.0f / F4 / F4;
 
                 goto next2;
             }
@@ -159,11 +160,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base += 1.0f / F / F / F;
+            base += 1.0f / F4 / F4 / F4;
 
             if ( base > 1.0f ) {
 
-                base -= 1.0f / F / F / F;
+                base -= 1.0f / F4 / F4 / F4;
 
                 goto next3;
             }
@@ -176,11 +177,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base -= 1.0f / F / F / F / F;
+            base -= 1.0f / F4 / F4 / F4 / F4;
 
             if ( base < 0.0f ) {
 
-                base += 1.0f / F / F / F / F;
+                base += 1.0f / F4 / F4 / F4 / F4;
 
                 goto next4;
             }
@@ -193,11 +194,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base += 1.0f / F / F / F / F / F;
+            base += 1.0f / F4 / F4 / F4 / F4 / F4;
 
             if ( base > 1.0f ) {
 
-                base -= 1.0f / F / F / F / F / F;
+                base -= 1.0f / F4 / F4 / F4 / F4 / F4;
 
                 goto next5;
             }
@@ -210,11 +211,11 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base -= 1.0f / F / F / F / F / F / F;
+            base -= 1.0f / F4 / F4 / F4 / F4 / F4 / F4;
 
             if ( base < 0.0f ) {
 
-                base += 1.0f / F / F / F / F / F / F;
+                base += 1.0f / F4 / F4 / F4 / F4 / F4 / F4;
 
                 goto next6;
             }
@@ -227,7 +228,7 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
 
         do {
 
-            base += 1.0f / F / F / F / F / F / F / F;
+            base += 1.0f / F4 / F4 / F4 / F4 / F4 / F4 / F4;
 
             if ( base > 1.0f ) break;
 
@@ -242,9 +243,9 @@ inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPoly
     } while ( sqrd_distance_ < squaredLength ( last_point_ - point ) );
 }
 
-#undef F
+#undef F4
 
-}
+}  // namespace sf::CatmullRom::detail
 
 namespace sf::CatmullRom {
 
@@ -367,7 +368,7 @@ CoordinatesVector catmullRom ( const Points & points_, float distance_ ) noexcep
         return return_value;
     }
 }
-}
+}  // namespace sf::CatmullRom
 
 #if 0
 

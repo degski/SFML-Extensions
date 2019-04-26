@@ -653,7 +653,7 @@ struct CallbackTimer {
     float m_duration, m_start, m_end;
     HrTimePoint m_start_time;
 
-    CallbackTimer ( Callback && callback_, Easing easing_, const float start_, const float end_, const FloatDuration duration_, const std::chrono::milliseconds delay_ = std::chrono::milliseconds { 0 } ) noexcept;
+    CallbackTimer ( Callback && callback_, Easing easing_, float start_, float end_, FloatDuration duration_, std::chrono::milliseconds delay_ = std::chrono::milliseconds { 0 } ) noexcept;
 
     Status run ( ) noexcept;
 
@@ -661,7 +661,7 @@ struct CallbackTimer {
 
     static HrClock s_clock;
 };
-}
+}  // namespace sf
 
 
 #define LAMBDA_DELAY( L, E ) L, &sf::easing::noEasing::run<float>, 0.0f, 0.0f, std::chrono::milliseconds { ( 0 ) }, std::chrono::milliseconds { ( E ) }
@@ -731,4 +731,4 @@ using CallbackAnimator = Animator<CallbackTimer>;
 using DelegateAnimator = Animator<DelegateTimer>;
 #endif
 
-}
+}  // namespace sf

@@ -76,11 +76,11 @@ CallbackTimer::CallbackTimer ( Callback && callback_, Easing easing_, const floa
 
 typename CallbackTimer::Status CallbackTimer::run ( ) noexcept {
     float progress = std::chrono::duration < float > ( s_clock.now ( ) - m_start_time ).count ( );
-    if ( progress < 0.0f ) {
+    if ( progress < 0.0F ) {
         return Status::waiting;
     }
     progress /= m_duration;
-    if ( progress < 1.0f ) {
+    if ( progress < 1.0F ) {
         m_callback ( m_easing ( progress, m_start, m_end ) );
         return Status::animating;
     }
@@ -90,4 +90,4 @@ typename CallbackTimer::Status CallbackTimer::run ( ) noexcept {
 
 HrClock CallbackTimer::s_clock;
 
-}
+}  // namespace sf

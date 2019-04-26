@@ -65,4 +65,4 @@ namespace sf::CatmullRom {
     // last point, respectively. The returned points are at a distance of distance_
     // (at least) away from each other... 	Requires 3 points or more...
     CoordinatesVector catmullRom ( const Points & points_, float distance_ ) noexcept;
-}
+}  // namespace sf::CatmullRom

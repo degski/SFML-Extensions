@@ -41,8 +41,8 @@ struct Particle {
 
 class ParticleSystem : public Drawable, public Transformable, public Vertex, Color {
     public:
-    ParticleSystem ( const Uint32 count_, const IntInterval speed_ = IntInterval { 50, 100 }, const IntInterval lifetime_ = IntInterval { 1'000, 3'000 } );
-    void update ( const Time elapsed, const Color Color/* = sf::Color::White*/ );
+    ParticleSystem ( Uint32 count_, IntInterval speed_ = IntInterval { 50, 100 }, IntInterval lifetime_ = IntInterval { 1'000, 3'000 } );
+    void update ( Time elapsed, Color Color/* = sf::Color::White*/ );
 
     private:
     virtual void draw ( RenderTarget & target_, RenderStates states_ ) const {
@@ -55,7 +55,7 @@ class ParticleSystem : public Drawable, public Transformable, public Vertex, Col
     }
 
     private:
-    void resetParticle ( const std::size_t index );
+    void resetParticle ( std::size_t index );
 
     public:
     IntInterval speed, lifetime;
@@ -67,4 +67,4 @@ class ParticleSystem : public Drawable, public Transformable, public Vertex, Col
     Time m_lifetimes;
 };
 
-}
+}  // namespace sf

@@ -40,7 +40,7 @@ namespace z85
 
 std::string encode_with_padding(const char* source, size_t inputSize)
 {
-   if (!source || inputSize == 0)
+   if ((source == nullptr) || inputSize == 0)
    {
       return std::string();
    }
@@ -61,7 +61,7 @@ std::string encode_with_padding(const std::string& source)
 
 std::string decode_with_padding(const char* source, size_t inputSize)
 {
-   if (!source || inputSize == 0)
+   if ((source == nullptr) || inputSize == 0)
    {
       return std::string();
    }
@@ -89,7 +89,7 @@ std::string decode_with_padding(const std::string& source)
 
 std::string encode(const char* source, size_t inputSize)
 {
-   if (!source || inputSize == 0)
+   if ((source == nullptr) || inputSize == 0)
    {
       return std::string();
    }
@@ -114,7 +114,7 @@ std::string encode(const std::string& source)
 
 std::string decode(const char* source, size_t inputSize)
 {
-   if (!source || inputSize == 0)
+   if ((source == nullptr) || inputSize == 0)
    {
       return std::string();
    }

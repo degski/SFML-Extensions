@@ -54,7 +54,7 @@ struct LZ4Dictionary {
     friend class LZ4OStreamBuf;
     friend class LZ4IStreamBuf;
     void * data      = nullptr;
-    std::size_t size = 0u;
+    std::size_t size = 0U;
 };
 
 struct LZ4OStream : public std::ostream {
@@ -62,8 +62,8 @@ struct LZ4OStream : public std::ostream {
     static constexpr int BEST_SPEED                = 1;
     static constexpr int BALANCED_COMPRESSION      = 4;
     static constexpr int BEST_COMPRESSION          = 9;
-    LZ4OStream ( std::ostream & stream_, int const compression_level = BALANCED_COMPRESSION );
-    LZ4OStream ( std::ostream & stream_, LZ4Dictionary const & dictionary_, int const compression_level_ = BALANCED_COMPRESSION );
+    LZ4OStream ( std::ostream & stream_, int compression_level = BALANCED_COMPRESSION );
+    LZ4OStream ( std::ostream & stream_, LZ4Dictionary const & dictionary_, int compression_level_ = BALANCED_COMPRESSION );
     ~LZ4OStream ( ) override;
 };
 

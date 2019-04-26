@@ -146,4 +146,4 @@ void loadFromFileCSV ( T & t_, Path && path_, std::string && file_name_ ) noexce
     }
     istream.close ( );
 }
-}
+}  // namespace sf

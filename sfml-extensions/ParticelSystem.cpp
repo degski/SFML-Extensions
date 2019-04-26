@@ -77,4 +77,4 @@ void ParticleSystem::resetParticle ( const std::size_t index_ ) {
     m_vertices [ index_ ].position = emitter;
 }
 
-}
+}  // namespace sf
