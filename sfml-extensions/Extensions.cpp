@@ -31,8 +31,8 @@
 #include <string>
 #include <thread>
 
-#include "Extensions/Extensions.hpp"
-#include "Extensions/Box.hpp"
+#include "./Extensions/Extensions.hpp"
+#include "./Extensions/Box.hpp"
 
 namespace sf {
 
@@ -43,10 +43,10 @@ float clampRadians ( float r_ ) noexcept {
             r_ -= two_pi;
         } while ( r_ > two_pi );
     }
-    if ( r_ < 0.0F ) {
+    if ( r_ < 0.0f ) {
         do {
             r_ += two_pi;
-        } while ( r_ < 0.0F );
+        } while ( r_ < 0.0f );
     }
     return r_;
 }
@@ -54,7 +54,7 @@ float clampRadians ( float r_ ) noexcept {
 
 float makeOdd ( const float v_, const bool round_up_ ) noexcept {
     // The second parameter is a_ boolean value, true for round-up, false for round-down.
-    if ( v_ > 0.0F ) {
+    if ( v_ > 0.0f ) {
         Uint64 v = ( Uint64 ) v_;
         if ( round_up_ ) {
             v += ( Uint64 ) not ( v & Uint64 { 1 } );
@@ -114,7 +114,7 @@ void makeWindowTransparent ( RenderWindowRef window ) noexcept {
 void makeWindowOpaque ( RenderWindowRef window ) noexcept {
     HWND hwnd = window.getSystemHandle ( );
     SetWindowLongPtr ( hwnd, GWL_EXSTYLE, GetWindowLongPtr ( hwnd, GWL_EXSTYLE ) & ~WS_EX_LAYERED );
-    RedrawWindow ( hwnd, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME | RDW_ALLCHILDREN );
+    RedrawWindow ( hwnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME | RDW_ALLCHILDREN );
 }
 
 
@@ -214,7 +214,7 @@ namespace detail {
 
 
 bool equal ( const float a_, const float b_ ) noexcept {
-    return std::abs ( b_ - a_ ) < 4.0F * FLT_EPSILON;
+    return std::abs ( b_ - a_ ) < 4.0f * FLT_EPSILON;
 }
 
 bool equal ( const Point & a_, const Point & b_ ) noexcept {
@@ -222,7 +222,7 @@ bool equal ( const Point & a_, const Point & b_ ) noexcept {
 }
 
 bool not_equal ( const float a_, const float b_ ) noexcept {
-    return std::abs ( b_ - a_ ) >= 4.0F * FLT_EPSILON;
+    return std::abs ( b_ - a_ ) >= 4.0f * FLT_EPSILON;
 }
 
 bool not_equal ( const Point & a_, const Point & b_ ) noexcept {
@@ -285,15 +285,14 @@ std::optional<Point> lineSegmentIntersection ( const Point & p0_, const Point & 
     }
     return std::optional<Point> ( );
 }
-}  // namespace detail
+}
 
 
 bool segmentIntersectsRectangle ( const Point & p1_, const Point & p2_, const RectangleShape & rectangle_ ) noexcept {
     // https://stackoverflow.com/questions/5514366/how-to-know-if-a_-line-intersects-a_-rectangle#5514619
     const FloatBox rectangle_bounds ( rectangle_.getGlobalBounds ( ) );
     // Find min and max X for the segment.
-    float min_x = p1_.x;
-    float max_x = p2_.x;
+    float min_x = p1_.x, max_x = p2_.x;
     if ( p1_.x > p2_.x ) {
         min_x = p2_.x;
         max_x = p1_.x;
@@ -310,12 +309,10 @@ bool segmentIntersectsRectangle ( const Point & p1_, const Point & p2_, const Re
         return false;
     }
     // Find corresponding min and max Y for min and max X we found before.
-    float min_y = p1_.y;
-    float max_y = p2_.y;
+    float min_y = p1_.y, max_y = p2_.y;
     const float dx = p2_.x - p1_.x;
-    if ( detail::not_equal ( dx, 0.0F ) ) {
-        const float a_ = ( p2_.y - p1_.y ) / dx;
-        const float b = p1_.y - a_ * p1_.x;
+    if ( detail::not_equal ( dx, 0.0f ) ) {
+        const float a_ = ( p2_.y - p1_.y ) / dx, b = p1_.y - a_ * p1_.x;
         min_y = a_ * min_x + b;
         max_y = a_ * max_x + b;
     }
@@ -330,7 +327,10 @@ bool segmentIntersectsRectangle ( const Point & p1_, const Point & p2_, const Re
         min_y = rectangle_bounds.top;
     }
     // If Y-projections do not intersect return false.
-    return min_y <= max_y;
+    if ( min_y > max_y ) {
+        return false;
+    }
+    return true;
 }
 
 
@@ -347,40 +347,40 @@ std::optional<Point> lineSegmentIntersectionStrict ( const Point & p0_, const Po
 std::string loadFromResource ( const Int32 name_ ) {
     // Loads text from a_ resource (.rc) file and return it as a_ string.
     HRSRC rsrc_data = FindResource ( NULL, MAKEINTRESOURCE ( name_ ), L"FILEDATA" );
-    if ( ( rsrc_data ) == nullptr ) {
+    if ( not ( rsrc_data ) ) {
         throw std::runtime_error ( "Can not find resource." );
     }
-    DWORD rsrc_data_size = SizeofResource ( nullptr, rsrc_data );
+    DWORD rsrc_data_size = SizeofResource ( NULL, rsrc_data );
     if ( rsrc_data_size <= 0 ) {
         throw std::runtime_error ( "Data size of resource is 0." );
     }
-    HGLOBAL grsrc_data = LoadResource ( nullptr, rsrc_data );
-    if ( ( grsrc_data ) == nullptr ) {
+    HGLOBAL grsrc_data = LoadResource ( NULL, rsrc_data );
+    if ( not ( grsrc_data ) ) {
         throw std::runtime_error ( "Failed to load resource." );
     }
     LPVOID first_byte = LockResource ( grsrc_data );
-    if ( ( first_byte ) == nullptr ) {
+    if ( not ( first_byte ) ) {
         throw std::runtime_error ( "Failed to lock resource." );
     }
-    return std::string ( static_cast< char*>(first_byte), rsrc_data_size );
+    return std::string ( ( char* ) first_byte, rsrc_data_size );
 }
 
 
 void loadFromResource ( sf::Music & destination_, const Int32 name_ ) {
     HRSRC rsrc_data = FindResource ( NULL, MAKEINTRESOURCE ( name_ ), L"FILEDATA" );
-    if ( rsrc_data == nullptr ) {
+    if ( not rsrc_data ) {
         throw std::runtime_error ( "Failed to find resource." );
     }
-    DWORD rsrc_data_size = SizeofResource ( nullptr, rsrc_data );
+    DWORD rsrc_data_size = SizeofResource ( NULL, rsrc_data );
     if ( rsrc_data_size <= 0 ) {
         throw std::runtime_error ( "Size of resource is 0." );
     }
-    HGLOBAL grsrc_data = LoadResource ( nullptr, rsrc_data );
-    if ( grsrc_data == nullptr ) {
+    HGLOBAL grsrc_data = LoadResource ( NULL, rsrc_data );
+    if ( not grsrc_data ) {
         throw std::runtime_error ( "Failed to load resource." );
     }
     LPVOID first_byte = LockResource ( grsrc_data );
-    if ( ( first_byte ) == nullptr ) {
+    if ( not ( first_byte ) ) {
         throw std::runtime_error ( "Failed to lock resource." );
     }
     if ( not ( destination_.openFromMemory ( first_byte, rsrc_data_size ) ) ) {
@@ -420,7 +420,7 @@ HrTimePoint Pacer::pace ( ) noexcept {
     // At 60hz, the duration of 1 frame is 16'666'667 nanoseconds, i.e. per 3 nanoseconds 1
     // nanosecond too much (should be: 3 * 16'666'666 + 2/3 = 50'000'000 =/= 50'000'001),
     // the below corrects for that so we avoid drift.
-    if ( (c--) != 0 ) {
+    if ( c-- ) {
         m_time += m_duration;
     }
     else {
@@ -447,4 +447,4 @@ IntDuration Pacer::now ( ) noexcept {
     // static const std::chrono::nanoseconds start { __rdtscp ( &m_ui ) };
     return std::chrono::nanoseconds { __rdtscp ( &m_ui ) };
 }
-}  // namespace sf
+}

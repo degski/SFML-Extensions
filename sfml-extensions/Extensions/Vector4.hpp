@@ -254,8 +254,8 @@ bool operator !=(const Vector4<T>& left, const Vector4<T>& right);
 #include "Vector4.inl"
 
 // Define the most common types
-using Vector4i = Vector4<int>;
-using Vector4f = Vector4<float>;
+typedef Vector4<int>   Vector4i;
+typedef Vector4<float> Vector4f;
 
 } // namespace sf
 

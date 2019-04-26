@@ -28,7 +28,7 @@
  * Source repository: http://github.com/artemkin/z85
  */
 
-#include "Extensions/Z85.hpp"
+#include "./Extensions/Z85.hpp"
 
 #include <cassert>
 
