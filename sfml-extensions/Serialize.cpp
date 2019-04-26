@@ -78,7 +78,7 @@ static Path get_app_exe_path_impl ( ) noexcept {
 
     TCHAR exename [ 1024 ];
 
-    GetModuleFileName ( nullptr, exename, 1024 );
+    GetModuleFileName ( NULL, exename, 1024 );
 
     return Path ( exename ).parent_path ( );
 }
@@ -91,4 +91,4 @@ Path getAppExePath ( ) noexcept {
     return value;
 }
 
-}  // namespace sf
+}

@@ -43,7 +43,7 @@ LZ4Dictionary::LZ4Dictionary ( LZ4Dictionary && other_ ) noexcept {
     data        = other_.data;
     size        = other_.size;
     other_.data = nullptr;
-    other_.size = 0U;
+    other_.size = 0u;
 }
 
 LZ4Dictionary::LZ4Dictionary ( int name_ ) { loadFromResource ( name_ ); }
@@ -57,33 +57,28 @@ LZ4Dictionary::~LZ4Dictionary ( ) {
     data        = other_.data;
     size        = other_.size;
     other_.data = nullptr;
-    other_.size = 0U;
+    other_.size = 0u;
     return *this;
 }
 
 void LZ4Dictionary::loadFromResource ( int name_ ) {
-    HRSRC rsrc_data = FindResource ( nullptr, MAKEINTRESOURCE ( name_ ), L"FILEDATA" );
-    if ( rsrc_data == nullptr ) {
+    HRSRC rsrc_data = FindResource ( NULL, MAKEINTRESOURCE ( name_ ), L"FILEDATA" );
+    if ( not rsrc_data )
         throw std::runtime_error ( "Failed to find resource." );
-}
-    DWORD rsrc_data_size = SizeofResource ( nullptr, rsrc_data );
-    if ( rsrc_data_size <= 0 ) {
+    DWORD rsrc_data_size = SizeofResource ( NULL, rsrc_data );
+    if ( rsrc_data_size <= 0 )
         throw std::runtime_error ( "Size of resource is 0." );
-    }  {
-        size = static_cast< std::size_t>(rsrc_data_size);
-}
-    HGLOBAL grsrc_data = LoadResource ( nullptr, rsrc_data );
-    if ( grsrc_data == nullptr ) {
+    else
+        size = ( std::size_t ) rsrc_data_size;
+    HGLOBAL grsrc_data = LoadResource ( NULL, rsrc_data );
+    if ( not grsrc_data )
         throw std::runtime_error ( "Failed to load resource." );
-}
     LPVOID first_byte = LockResource ( grsrc_data );
-    if ( first_byte == nullptr ) {
+    if ( not first_byte )
         throw std::runtime_error ( "Failed to lock resource." );
-}
     data = LZ4F_createCDict ( first_byte, size );
-    if ( data == nullptr ) {
+    if ( not data )
         throw std::runtime_error ( "Failed to load LZ4-dictionary." );
-}
 }
 
 static constexpr LZ4F_preferences_t DEFAULT_PREFERENCES = {
@@ -141,14 +136,14 @@ class LZ4OStreamBuf final : public std::streambuf {
         return ch;
     }
 
-    [[nodiscard]] int sync ( ) override {
+    [[nodiscard]] virtual int sync ( ) override {
         compress_buffer ( );
         return m_sink->pubsync ( );
     }
 
     private:
     void initialize_stream ( ) {
-        std::size_t header_size = 0U;
+        std::size_t header_size = 0u;
         if ( m_dictionary )
             header_size =
                 LZ4F_compressBegin_usingCDict ( m_compression_ctx, m_compression_buffer.data ( ), m_compression_buffer.size ( ),
@@ -191,7 +186,7 @@ class LZ4OStreamBuf final : public std::streambuf {
 
 class LZ4IStreamBuf final : public std::streambuf {
     public:
-    LZ4IStreamBuf ( std::streambuf * source_, std::size_t const internal_buffer_size = 4096U ) :
+    LZ4IStreamBuf ( std::streambuf * source_, std::size_t const internal_buffer_size = 4096u ) :
         m_source ( source_ ), m_context ( nullptr ), m_dictionary ( nullptr ), m_src_buffer ( internal_buffer_size ),
         m_read_area ( internal_buffer_size ), m_src_offset ( 0 ), m_src_size ( 0 ) {
         std::size_t status = LZ4F_createDecompressionContext ( &m_context, LZ4F_VERSION );
@@ -199,7 +194,7 @@ class LZ4IStreamBuf final : public std::streambuf {
             throw std::runtime_error ( "Error during LZ4 istream creation" );
         setg ( &m_read_area.front ( ), &m_read_area.front ( ), &m_read_area.front ( ) );
     }
-    LZ4IStreamBuf ( std::streambuf * source_, LZ4Dictionary const & dictionary_, std::size_t const internal_buffer_size = 4096U ) :
+    LZ4IStreamBuf ( std::streambuf * source_, LZ4Dictionary const & dictionary_, std::size_t const internal_buffer_size = 4096u ) :
         m_source ( source_ ), m_context ( nullptr ), m_dictionary ( &dictionary_ ), m_src_buffer ( internal_buffer_size ),
         m_read_area ( internal_buffer_size ), m_src_offset ( 0 ), m_src_size ( 0 ) {
         std::size_t status = LZ4F_createDecompressionContext ( &m_context, LZ4F_VERSION );
@@ -221,7 +216,7 @@ class LZ4IStreamBuf final : public std::streambuf {
                 return traits_type::eof ( );
             std::size_t src_avalable = m_src_size - m_src_offset;
             std::size_t dest_size    = m_read_area.size ( );
-            std::size_t ret          = 0U;
+            std::size_t ret          = 0u;
             if ( m_dictionary )
                 ret = LZ4F_decompress_usingDict ( m_context, &m_read_area.front ( ), &dest_size,
                                                   &m_src_buffer.front ( ) + m_src_offset, &src_avalable, m_dictionary->data,

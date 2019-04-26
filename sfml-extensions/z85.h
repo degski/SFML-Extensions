@@ -30,7 +30,7 @@
 
 #pragma once
 
-#include <cstddef>
+#include <stddef.h>
 
 #if defined (__cplusplus)
 extern "C" {

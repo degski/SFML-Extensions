@@ -28,20 +28,20 @@
  * Source repository: http://github.com/artemkin/z85
  */
 
-#include <cassert>
-#include <climits>
+#include <assert.h>
+#include <limits.h>
 
 #include "z85.h"
 
-using uint32_t = unsigned int;
-using byte = unsigned char;
+typedef unsigned int  uint32_t;
+typedef unsigned char byte;
 
 // make sure uint32_t is 32-bit
-typedef char Z85_uint32_t_static_assert[static_cast<int>(sizeof(uint32_t) * CHAR_BIT == 32) * 2 - 1];
+typedef char Z85_uint32_t_static_assert[(sizeof(uint32_t) * CHAR_BIT == 32) * 2 - 1];
 
 #define DIV85_MAGIC 3233857729ULL
 // make sure magic constant is 64-bit
-typedef char Z85_div85_magic_static_assert[static_cast<int>(sizeof(DIV85_MAGIC) * CHAR_BIT == 64) * 2 - 1];
+typedef char Z85_div85_magic_static_assert[(sizeof(DIV85_MAGIC) * CHAR_BIT == 64) * 2 - 1];
 
 #define DIV85(number) ((uint32_t)((DIV85_MAGIC * number) >> 32) >> 6)
 
@@ -134,7 +134,7 @@ size_t Z85_decode_bound(size_t size)
 
 size_t Z85_encode(const char* source, char* dest, size_t inputSize)
 {
-   if ((source == nullptr) || (dest == nullptr) || ((inputSize % 4) != 0U))
+   if (!source || !dest || inputSize % 4)
    {
       assert(!"wrong source, destination or input size");
       return 0;
@@ -145,7 +145,7 @@ size_t Z85_encode(const char* source, char* dest, size_t inputSize)
 
 size_t Z85_decode(const char* source, char* dest, size_t inputSize)
 {
-   if ((source == nullptr) || (dest == nullptr) || ((inputSize % 5) != 0U))
+   if (!source || !dest || inputSize % 5)
    {
       assert(!"wrong source, destination or input size");
       return 0;
@@ -156,16 +156,14 @@ size_t Z85_decode(const char* source, char* dest, size_t inputSize)
 
 size_t Z85_encode_with_padding_bound(size_t size)
 {
-   if (size == 0) { return 0;
-}
+   if (size == 0) return 0;
    size = Z85_encode_bound(size);
    return size + (5 - size % 5) % 5 + 1;
 }
 
 size_t Z85_decode_with_padding_bound(const char* source, size_t size)
 {
-   if (size == 0 || (source == nullptr) || (byte)(source[0] - '0' - 1) > 3) { return 0;
-}
+   if (size == 0 || !source || (byte)(source[0] - '0' - 1) > 3) return 0;
    return Z85_decode_bound(size - 1) - 4 + (source[0] - '0');
 }
 
@@ -179,7 +177,7 @@ size_t Z85_encode_with_padding(const char* source, char* dest, size_t inputSize)
    assert(source && dest);
 
    // zero length string is not padded
-   if ((source == nullptr) || (dest == nullptr) || inputSize == 0)
+   if (!source || !dest || inputSize == 0)
    {
       return 0;
    }
@@ -212,7 +210,7 @@ size_t Z85_decode_with_padding(const char* source, char* dest, size_t inputSize)
    assert(source && dest && (inputSize == 0 || (inputSize - 1) % 5 == 0));
 
    // zero length string is not padded
-   if ((source == nullptr) || (dest == nullptr) || inputSize == 0 || (((inputSize - 1) % 5) != 0U))
+   if (!source || !dest || inputSize == 0 || (inputSize - 1) % 5)
    {
       return 0;
    }
