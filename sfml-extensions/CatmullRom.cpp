@@ -120,7 +120,7 @@ void centripetalCatmullRom ( const Vector2f & p0_, const Vector2f & p1_, const V
 
 inline void pointsOnSegment ( CoordinatesVector & return_value_, const CubicPolyXY & poly_, const Vector2f last_point_, const float sqrd_distance_ ) noexcept {
 
-    float base = -1.0F / F4;
+    float base = -1.0f / F4;
 
     sf::Vector2f point;
 
