@@ -60,9 +60,10 @@ struct LZ4Dictionary {
 struct LZ4OStream : public std::ostream {
     static constexpr int DEFAULT_COMPRESSION_LEVEL = 0;
     static constexpr int BEST_SPEED                = 1;
+    static constexpr int BALANCED_COMPRESSION      = 4;
     static constexpr int BEST_COMPRESSION          = 9;
-    LZ4OStream ( std::ostream & stream_, int const compression_level = DEFAULT_COMPRESSION_LEVEL );
-    LZ4OStream ( std::ostream & stream_, LZ4Dictionary const & dictionary_, int const compression_level_ = DEFAULT_COMPRESSION_LEVEL );
+    LZ4OStream ( std::ostream & stream_, int const compression_level = BALANCED_COMPRESSION );
+    LZ4OStream ( std::ostream & stream_, LZ4Dictionary const & dictionary_, int const compression_level_ = BALANCED_COMPRESSION );
     virtual ~LZ4OStream ( );
 };
 

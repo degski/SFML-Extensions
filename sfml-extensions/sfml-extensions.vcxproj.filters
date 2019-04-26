@@ -77,6 +77,9 @@
     <ClInclude Include="Extensions\Vector4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Extensions\LZ4Stream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\Box.inl">
