@@ -122,7 +122,8 @@ using is_unsigned_integral = std::conjunction<std::is_unsigned<T>, std::is_integ
 
 template<typename R, typename I>
 using are_valid_types = std::conjunction<is_real<R>, is_unsigned_integral<I>>;
-}
+
+} // namespace detail
 
 
 template<typename RType, typename Type = RType>
@@ -153,10 +154,10 @@ real degreeToRadian ( const real degree_ ) noexcept {
 float clampRadians ( float r_ ) noexcept;
 // The second parameter is a boolean value, true for round-up,
 //  false for round-down.
-float makeOdd ( const float v_, const bool round_up_ = true ) noexcept;
+float makeOdd ( float v_, bool round_up_ = true ) noexcept;
 // Sleep for a number of milliseconds.
-void sleepForMilliseconds ( const Int32 milliseconds_ ) noexcept;
-void sleepForMicroseconds ( const Int32 microseconds_ ) noexcept;
+void sleepForMilliseconds ( Int32 milliseconds_ ) noexcept;
+void sleepForMicroseconds ( Int32 microseconds_ ) noexcept;
 
 std::string systemTime ( ) noexcept;
 
@@ -171,7 +172,7 @@ inline void timeEndPeriod ( ) noexcept {
 void makeWindowSeeThrough ( RenderWindowRef window ) noexcept;
 void makeWindowTransparent ( RenderWindowRef window ) noexcept;
 void makeWindowOpaque ( RenderWindowRef window ) noexcept;
-void setWindowAlpha ( RenderWindowRef window, Uint8 alpha = 255 ) noexcept;
+void setWindowAlpha ( RenderWindowRef window, Uint8 alpha = 255U ) noexcept;
 
 Int32 getTitlebarHeight ( RenderWindowRef window ) noexcept;
 Int32 getWindowTop ( RenderWindowRef window ) noexcept;
@@ -179,8 +180,8 @@ Int32 getScreenRefreshRate ( ) noexcept;
 ScreenSizeType getScreenSizeType ( ) noexcept;
 
 struct SquareShape : RectangleShape {
-    SquareShape ( ) : RectangleShape ( ) { }
-    SquareShape ( const float s_ ) : RectangleShape ( Vector2f ( s_, s_ ) ) { }
+    SquareShape ( ) = default;
+    SquareShape ( float s_ ) : RectangleShape ( Vector2f ( s_, s_ ) ) { }
 };
 
 Vector2f centreOrigin ( RectangleShape & shape_ ) noexcept;
@@ -189,9 +190,9 @@ Vector2f centreOrigin ( Text & text_ ) noexcept;
 Vector2f centreRightOrigin ( Text & text_ ) noexcept;
 Vector2f centreLeftOrigin ( Text & text_ ) noexcept;
 
-bool segmentIntersectsRectangle ( const Point & p1_, const Point & p2_, const RectangleShape & rectangle_ ) noexcept;
-std::optional<Point> lineSegmentIntersection ( const Point & p0_, const Point & p1_, const Point & p2_, const Point & p3_ ) noexcept;
-std::optional<Point> lineSegmentIntersectionStrict ( const Point & p0_, const Point & p1_, const Point & p2_, const Point & p3_ ) noexcept;
+bool segmentIntersectsRectangle ( Point & p1_, Point & p2_, RectangleShape & rectangle_ ) noexcept;
+std::optional<Point> lineSegmentIntersection ( Point & p0_, Point & p1_, Point & p2_, Point & p3_ ) noexcept;
+std::optional<Point> lineSegmentIntersectionStrict ( Point & p0_, Point & p1_, Point & p2_, Point & p3_ ) noexcept;
 
 // If ( rv > 0 ) then C is to the left.
 // If ( rv = 0 ) then C is on the same line.
@@ -278,10 +279,10 @@ void loadFromResource ( T &destination_, const Int32 name_ ) {
 }
 
 
-void loadFromResource ( sf::Music & destination_, const Int32 name_ );
-std::string loadFromResource ( const Int32 name );
-void loadFromResource ( Shader &shader_, const Shader::Type type_, const Int32 name_ );
-void loadFromResource ( Shader &shader_, const Int32 vertex_name_, const Int32 fragment_name_ );
+void loadFromResource ( sf::Music & destination_, Int32 name_ );
+std::string loadFromResource ( Int32 name );
+void loadFromResource ( Shader &shader_, Shader::Type type_, Int32 name_ );
+void loadFromResource ( Shader &shader_, Int32 vertex_name_, Int32 fragment_name_ );
 
 
 // Vector2 casting.
@@ -369,7 +370,7 @@ struct Pacer {
 
     public:
 
-    void reset ( const Int64 frames_per_second_ ) noexcept;
+    void reset ( Int64 frames_per_second_ ) noexcept;
 
     Pacer ( ) noexcept :
         m_frequency ( qpfrequency ( ) ) {
@@ -397,7 +398,7 @@ struct Pacer {
 };
 
 
-}
+}  // namespace sf
 
 
 #if 0

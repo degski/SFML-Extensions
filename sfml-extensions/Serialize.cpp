@@ -9,7 +9,7 @@
 #include <ciso646>
 
 
-#include "./Extensions/Serialize.hpp"
+#include "Extensions/Serialize.hpp"
 
 
 namespace sf {

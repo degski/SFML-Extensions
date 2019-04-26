@@ -229,8 +229,8 @@ bool operator !=(const Box<T>& left, const Box<T>& right);
 #include "Box.inl"
 
 // Create typedefs for the most common types
-typedef Box<int>   IntBox;
-typedef Box<float> FloatBox;
+using IntBox = Box<int>   ;
+using FloatBox = Box<float>;
 
 template <typename T>
 Rect<T> boxToRect ( const Box<T> box ) noexcept
