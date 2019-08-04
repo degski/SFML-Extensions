@@ -177,8 +177,9 @@ void setWindowAlpha ( RenderWindowRef window, Uint8 alpha = 255 ) noexcept;
 
 Int32 getTitlebarHeight ( RenderWindowRef window ) noexcept;
 Int32 getWindowTop ( RenderWindowRef window ) noexcept;
-void moveWindowBottom ( RenderWindow& rw_ ) noexcept;
-void moveWindowAfter ( RenderWindow& rw_, RenderWindow& after_rw_ ) noexcept;
+void moveWindowTop ( RenderWindowRef rw_ ) noexcept;
+void moveWindowBottom (RenderWindowRef rw_) noexcept;
+void moveWindowAfter (RenderWindowRef rw_, RenderWindowRef after_rw_ ) noexcept;
 Int32 getScreenRefreshRate ( ) noexcept;
 ScreenSizeType getScreenSizeType ( ) noexcept;
 

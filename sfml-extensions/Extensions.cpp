@@ -151,12 +151,17 @@ Int32 getWindowTop ( RenderWindowRef window_ ) noexcept {
 }
 
 
-void moveWindowBottom ( RenderWindow& rw_) noexcept {
+void moveWindowTop ( RenderWindowRef rw_ ) noexcept {
+    SetWindowPos (rw_.getSystemHandle (), HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE);
+}
+
+
+void moveWindowBottom ( RenderWindowRef rw_ ) noexcept {
     SetWindowPos ( rw_.getSystemHandle (), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE );
 }
 
 
-void moveWindowAfter ( RenderWindow& rw_, RenderWindow& after_rw_ ) noexcept {
+void moveWindowAfter ( RenderWindowRef rw_, RenderWindowRef after_rw_ ) noexcept {
     SetWindowPos ( rw_.getSystemHandle (), after_rw_.getSystemHandle (), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE );
 }
 
