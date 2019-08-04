@@ -53,6 +53,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#include <Thor/Graphics.hpp>
+
 #include "Vector4.hpp"
 
 using namespace std::placeholders;  // for _1, _2, _3.
@@ -278,6 +280,7 @@ void loadFromResource ( T &destination_, const Int32 name_ ) {
 }
 
 
+void loadFromResource ( thor::BigTexture& destination_, const sf::Int32 name_ );
 void loadFromResource ( sf::Music & destination_, const Int32 name_ );
 std::string loadFromResource ( const Int32 name );
 void loadFromResource ( Shader &shader_, const Shader::Type type_, const Int32 name_ );
