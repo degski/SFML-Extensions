@@ -151,6 +151,16 @@ Int32 getWindowTop ( RenderWindowRef window_ ) noexcept {
 }
 
 
+void moveWindowBottom ( RenderWindow& rw_) noexcept {
+    SetWindowPos ( rw_.getSystemHandle (), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE );
+}
+
+
+void moveWindowAfter ( RenderWindow& rw_, RenderWindow& after_rw_ ) noexcept {
+    SetWindowPos ( rw_.getSystemHandle (), after_rw_.getSystemHandle (), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE );
+}
+
+
 static Int32 get_screen_refresh_rate_impl ( ) noexcept {
     // https://msdn.microsoft.com/en-us/library/dd162611(v=VS.85).aspx
     DEVMODE devmode;
