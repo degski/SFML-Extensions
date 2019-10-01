@@ -30,7 +30,7 @@
 #include <iostream>
 
 #ifndef SFML_EXTENSIONS_BUILD
-#    ifdef _DEBUG
+#    ifndef NDEBUG
 #        pragma comment( lib, "lz4d.lib" )
 #    else
 #        pragma comment( lib, "lz4.lib" )

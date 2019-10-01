@@ -32,7 +32,7 @@ Int32 numberOfProcessors ( ) noexcept {
 }
 
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 static bool created_app_data_name = false;
 #endif
 
@@ -48,7 +48,7 @@ static std::string set_app_data_path_impl ( std::string && name_ ) noexcept {
     const std::string v ( value + std::string ( "\\AppData\\Roaming\\" + name_ ) );
 
     fs::create_directory ( v );
-#ifdef _DEBUG
+#ifndef NDEBUG
     created_app_data_name = true;
 #endif
     return v;
@@ -67,7 +67,7 @@ Path getAppDataPath ( ) noexcept {
 
     // Call only after calling Path appDataPath ( std::string && name_ ) noexcept.
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     assert ( created_app_data_name );
 #endif
     return setAppDataPath ( std::string ( ) );

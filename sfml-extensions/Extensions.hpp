@@ -24,7 +24,7 @@
 #pragma once
 
 #ifndef SFML_EXTENSIONS_BUILD
-    #ifdef _DEBUG
+    #ifndef NDEBUG
         #pragma comment ( lib, "sfml-main-d.lib" )
         #pragma comment ( lib, "sfml-system-s-d.lib" )
         #pragma comment ( lib, "sfml-window-s-d.lib" )
